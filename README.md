@@ -20,3 +20,6 @@ TODO:
 + Bhop
 + Clean code and fix bugs
 + Auto-update offsets
+
+Constribution:
++ EFI_Driver_Access https://github.com/TheCruZ/EFI_Driver_Access
