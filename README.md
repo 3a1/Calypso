@@ -22,4 +22,4 @@ TODO:
 + Auto-update offsets
 
 Constribution:
-+ EFI_Driver_Access https://github.com/TheCruZ/EFI_Driver_Access
++ [EFI_Driver_Access](https://github.com/TheCruZ/EFI_Driver_Access)
