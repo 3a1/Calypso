@@ -6,6 +6,13 @@ Only triggerbot 4now
 
 In development phase.
 
+Usage:
++ Compile and copy to usb drive EFIDriver
++ Boot from usb drive and load driver
++ Boot back to the windows and connect arduino
++ Start EFIClient application and enjoy
+
+
 TODO:
 
 + Smart legit aimbot.
