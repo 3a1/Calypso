@@ -5,37 +5,8 @@
 #include "functions.h"
 #include <stdint.h>
 #include "arduino.h"
-
-arduino duino("Arduino Leonardo");
-
-void AimbotMain(int pid, uintptr_t client) {
- 
-    uintptr_t player = Driver::read<uintptr_t>(pid, client + offsets::dwLocalPlayerPawn);
-    int entityId = Driver::read<int>(pid, player + offsets::m_iIDEntIndex);
-
-    if (entityId > 0) {
-        uintptr_t entList = Driver::read<uintptr_t>(pid, client + offsets::dwEntityList);
-
-        uintptr_t entEntry = Driver::read<uintptr_t>(pid, entList + 0x8 * (entityId >> 9) + 0x10 );
-        uintptr_t entity = Driver::read<uintptr_t>(pid, entEntry + 120 * (entityId & 0x1FF) );
-
-        int entityTeam = Driver::read<int>(pid, entity + offsets::m_iTeamNum);
-        int playerTeam = Driver::read<int>(pid, player + offsets::m_iTeamNum);
-
-        if (entityTeam != playerTeam) {
-            int entityHp = Driver::read<int>(pid, entity + offsets::m_iHealth);
-            if (entityHp > 0) {
-                char buffer[] = "-10";
-                duino.send_data(buffer, sizeof(buffer));
-                //std::cout << "enemy" << std::endl;
-            }
-        }
-
-
-
-    }
-}
-
+#include "triggerbot.h"
+#include "config.h"
 
 int main()
 {
@@ -53,23 +24,42 @@ int main()
         exit(1);
         return 1;
     }
-    printf("[Z] EFI Driver found\n");
+
+    printf("[Z3BRA] EFI Driver found\n");
+
+    int movement_type = std::stoi(config("movement_type"));
+
+    bool triggerbot = stringToBool(config("triggerbot"));
+    int triggerbot_delay_before_click = std::stoi(config("triggerbot_delay_before_click"));
+    int triggerbot_delay_after_click = std::stoi(config("triggerbot_delay_after_click"));
+
+    printf("[Z3BRA] Config file found\n");
+
 
     auto hwnd = FindWindowA(NULL, "Counter-Strike 2");
-    printf("[Z] CS2 found\n");
-
-    printf("[Z] Try connection to the arduino...\n");
     DWORD pid;
     GetWindowThreadProcessId(hwnd, &pid);
-
-    uintptr_t client = getModuleAddress(pid, "client.dll");
-
-    printf("[Z] Starting main thread...\n");
-    while (true) {
-        if (GetAsyncKeyState(VK_LSHIFT))
-            AimbotMain(pid, client);
+    if (!pid) {
+        printf("[Z3BRA] CS2 not found\n");
+        system("pause");
     }
 
-    system("pause");
+    printf("[Z3BRA] CS2 found\n");
+    uintptr_t client = getModuleAddress(pid, "client.dll");
+    printf("[Z3BRA] client.dll base module address found\n");
+    printf("[Z3BRA] Starting main thread...\n");
 
+    if (movement_type == 1) {
+        if (triggerbot) {
+            TriggerbotArduinoMain(pid, client, triggerbot_delay_before_click, triggerbot_delay_after_click);
+        }
+    }
+    else if (movement_type == 2) {
+        if (triggerbot) {
+            TriggerbotMouseMain(pid, client, triggerbot_delay_before_click, triggerbot_delay_after_click);
+        }
+    }
+
+    printf("[Z3BRA] All cheat features are turned off or problem with config file.\n");
+    system("pause");
 }
