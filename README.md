@@ -12,4 +12,4 @@ TODO:
 + Make choose between arduino and non-adruino version
 + Bhop
 + Clean code and fix bugs
-
++ Auto-update offsets
