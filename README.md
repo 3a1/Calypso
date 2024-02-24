@@ -1,6 +1,6 @@
 # **CS2-UEFI-Arduino**
 
-UEFI Driver + Aduino CS2 Cheat
+UEFI Driver + Aduino Leonardo CS2 Cheat
 Alpha Version.
 Only triggerbot 4now
 
