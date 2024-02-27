@@ -85,6 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="aimbot.cpp" />
     <ClCompile Include="arduino.cpp" />
     <ClCompile Include="config.cpp" />
     <ClCompile Include="Driver.cpp" />
@@ -94,6 +95,7 @@
     <ClCompile Include="triggerbot.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="aimbot.h" />
     <ClInclude Include="arduino.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="Driver.h" />

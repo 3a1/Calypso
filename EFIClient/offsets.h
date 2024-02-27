@@ -14,5 +14,6 @@ namespace offsets { // client.dll
     constexpr std::ptrdiff_t m_iTeamNum = 0x3CB;
     constexpr std::ptrdiff_t m_vOldOrigin = 0x127C;
     constexpr std::ptrdiff_t m_iHealth = 0x334;
+    constexpr std::ptrdiff_t m_vecOrigin = 0x550;
 
 }

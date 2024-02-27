@@ -3,7 +3,7 @@
 #include "offsets.h"
 #include "functions.h"
 
-void TriggerbotArduinoMain(int pid, uintptr_t client, int triggerbot_delay_before_click, int triggerbot_delay_after_click)
+void TriggerbotArduino(int pid, uintptr_t client, int triggerbot_delay_before_click, int triggerbot_delay_after_click)
 {
 
     printf("[Z3BRA] Try connect to the arduino...\n");
@@ -41,7 +41,7 @@ void TriggerbotArduinoMain(int pid, uintptr_t client, int triggerbot_delay_befor
     }
 }
 
-void TriggerbotMouseMain(int pid, uintptr_t client, int triggerbot_delay_before_click, int triggerbot_delay_after_click)
+void TriggerbotMouse(int pid, uintptr_t client, int triggerbot_delay_before_click, int triggerbot_delay_after_click)
 {
 
     while (true) {
@@ -72,6 +72,8 @@ void TriggerbotMouseMain(int pid, uintptr_t client, int triggerbot_delay_before_
 
             }
         }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
     }
 }

@@ -7,6 +7,7 @@
 #include "arduino.h"
 #include "triggerbot.h"
 #include "config.h"
+#include "aimbot.h"
 
 int main()
 {
@@ -33,6 +34,11 @@ int main()
     int triggerbot_delay_before_click = std::stoi(config("triggerbot_delay_before_click"));
     int triggerbot_delay_after_click = std::stoi(config("triggerbot_delay_after_click"));
 
+    bool aimbot = stringToBool(config("aimbot"));
+    int aimbot_fov = std::stoi(config("aimbot_fov"));
+    int aimbot_speed = std::stoi(config("aimbot_speed"));
+    int aimbot_smooth_amount = std::stoi(config("aimbot_smooth_amount"));
+
     printf("[Z3BRA] Config file found\n");
 
 
@@ -49,17 +55,32 @@ int main()
     printf("[Z3BRA] client.dll base module address found\n");
     printf("[Z3BRA] Starting main thread...\n");
 
+
     if (movement_type == 1) {
+        printf("[Z3BRA] Arduino movement in developing...\n");
+        /*
         if (triggerbot) {
-            TriggerbotArduinoMain(pid, client, triggerbot_delay_before_click, triggerbot_delay_after_click);
+            TriggerbotArduino(pid, client, triggerbot_delay_before_click, triggerbot_delay_after_click);
         }
+        */
     }
     else if (movement_type == 2) {
-        if (triggerbot) {
-            TriggerbotMouseMain(pid, client, triggerbot_delay_before_click, triggerbot_delay_after_click);
+        if (triggerbot && aimbot) {
+            std::thread triggerbotThread(TriggerbotMouse, pid, client, triggerbot_delay_before_click, triggerbot_delay_after_click);
+            std::thread aimbotThread(AimbotMouse, pid, client, aimbot_speed, aimbot_smooth_amount, aimbot_fov);
+            triggerbotThread.join();
+            aimbotThread.join();
         }
-    }
+        else if (aimbot) {
+            std::thread aimbotThread(AimbotMouse, pid, client, aimbot_speed, aimbot_smooth_amount, aimbot_fov);
+            aimbotThread.join();
+        }
+        else if (triggerbot) {
+            std::thread triggerbotThread(TriggerbotMouse, pid, client, triggerbot_delay_before_click, triggerbot_delay_after_click);
+            triggerbotThread.join();
+        }
 
+    }
     printf("[Z3BRA] All cheat features are turned off or problem with config file.\n");
     system("pause");
 }
