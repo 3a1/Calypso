@@ -1,10 +1,11 @@
 # **CS2-UEFI-Arduino**
 
 UEFI Driver + Aduino Leonardo CS2 Cheat
-Alpha Version.
-Only triggerbot 4now
 
 In development phase.
+
+After you open client side for first time application will create config for you with my own settings that i use for full legit playstyle.
+You can always open config.cfg and set settings to your own preferations, i tries make it as easy as it can be.
 
 Usage:
 + Format your usb drive
