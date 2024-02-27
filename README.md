@@ -7,9 +7,12 @@ Only triggerbot 4now
 In development phase.
 
 Usage:
-+ Compile and copy to usb drive EFIDriver
-+ Boot from usb drive and load driver
-+ Boot back to the windows and connect arduino
++ Format your usb drive
++ Download shell.efi from [this](https://github.com/tianocore/edk2-archive/blob/master/ShellBinPkg/UefiShell/X64/Shell.efi) repo and rename it to bootx64.efi
++ Compile EFIDriver from my repo (in linux type just "make" in console and done)
++ Simply drop EFIDriver(memory.efi) to pendrive then create folders in usb drive and paste bootx64.efi(D:\EFI\Boot\bootx64.efi; D:\memory.efi)
++ Boot from usb drive and try to find your usb drive by typing "FS(disk number):" then "ls". For me it always on FS2:
++ Load driver by "load memory.efi", then just type exit and load back to your system
 + Start EFIClient application and enjoy
 
 
