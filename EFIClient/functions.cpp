@@ -32,6 +32,13 @@ DWORD_PTR getModuleAddress(DWORD processID, const char* moduleName)
     return result;
 }
 
+double distance(int x1, int y1, int x2, int y2) {
+    int dx = x2 - x1;
+    int dy = y2 - y1;
+    return std::sqrt(dx * dx + dy * dy);
+}
+
+
 bool CheckDriverStatus() {
     int icheck = 82;
     NTSTATUS status = 0;
@@ -65,4 +72,90 @@ void LeftClick()
 
 bool stringToBool(const std::string& str) {
     return str == "true";
+}
+
+void AimAtPos(float x, float y, int AimSpeed, int SmoothAmount)
+{
+    float TargetX = 0;
+    float TargetY = 0;
+
+    POINT cursorPos;
+    GetCursorPos(&cursorPos);
+
+    int ScreenCenterX = cursorPos.x;
+    int ScreenCenterY = cursorPos.y;
+
+    bool Smooth = true;
+
+    if (AimSpeed == 0) AimSpeed = 1;
+    if (SmoothAmount == 0) SmoothAmount = 1;
+
+    if (x != 0)
+    {
+        if (x > ScreenCenterX)
+        {
+            TargetX = -(ScreenCenterX - x);
+            TargetX /= AimSpeed;
+            if (TargetX + ScreenCenterX > ScreenCenterX * 2) TargetX = 0;
+        }
+
+        if (x < ScreenCenterX)
+        {
+            TargetX = x - ScreenCenterX;
+            TargetX /= AimSpeed;
+            if (TargetX + ScreenCenterX < 0) TargetX = 0;
+        }
+    }
+
+    if (y != 0)
+    {
+        if (y > ScreenCenterY)
+        {
+            TargetY = -(ScreenCenterY - y);
+            TargetY /= AimSpeed;
+            if (TargetY + ScreenCenterY > ScreenCenterY * 2) TargetY = 0;
+        }
+
+        if (y < ScreenCenterY)
+        {
+            TargetY = y - ScreenCenterY;
+            TargetY /= AimSpeed;
+            if (TargetY + ScreenCenterY < 0) TargetY = 0;
+        }
+    }
+
+    if (!Smooth)
+    {
+        mouse_event(0x0001, (UINT)(TargetX), (UINT)(TargetY), NULL, NULL);
+        return;
+    }
+    else
+    {
+        TargetX /= SmoothAmount;
+        TargetY /= SmoothAmount;
+        if (abs(TargetX) < 1)
+        {
+            if (TargetX > 0)
+            {
+                TargetX = 1;
+            }
+            if (TargetX < 0)
+            {
+                TargetX = -1;
+            }
+        }
+        if (abs(TargetY) < 1)
+        {
+            if (TargetY > 0)
+            {
+                TargetY = 1;
+            }
+            if (TargetY < 0)
+            {
+                TargetY = -1;
+            }
+        }
+        mouse_event(0x0001, (UINT)(TargetX), (UINT)(TargetY), NULL, NULL);
+        return;
+    }
 }

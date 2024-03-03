@@ -85,24 +85,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="aimbot.cpp" />
     <ClCompile Include="arduino.cpp" />
     <ClCompile Include="config.cpp" />
     <ClCompile Include="Driver.cpp" />
-    <ClCompile Include="EFIClient.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="features.cpp" />
     <ClCompile Include="functions.cpp" />
+    <ClCompile Include="mainLoop.h" />
     <ClCompile Include="struct.h" />
-    <ClCompile Include="triggerbot.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="aimbot.h" />
     <ClInclude Include="arduino.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="Driver.h" />
+    <ClInclude Include="features.h" />
     <ClInclude Include="functions.h" />
     <ClInclude Include="includes.h" />
     <ClInclude Include="offsets.h" />
-    <ClInclude Include="triggerbot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,6 +4,9 @@
 #include <numbers>
 #include "includes.h"
 
+struct PlayerPosition {
+	float screenPosition[2];
+};
 
 struct view_matrix_t {
     float* operator[ ](int index) 
@@ -13,7 +16,6 @@ struct view_matrix_t {
 
     float matrix[4][4];
 };
-
 
 struct Vector3
 {

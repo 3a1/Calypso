@@ -1,10 +1,11 @@
+#pragma once
 #include <sstream>
 
 namespace offsets { // client.dll
-    constexpr std::ptrdiff_t dwEntityList = 0x18B3FA8;
-    constexpr std::ptrdiff_t dwLocalPlayerPawn = 0x1729348;
-    constexpr std::ptrdiff_t dwViewMatrix = 0x19154C0;
-    constexpr std::ptrdiff_t dwViewAngles = 0x19233E0;
+    constexpr std::ptrdiff_t dwEntityList = 0x18BBAF8;
+    constexpr std::ptrdiff_t dwLocalPlayerPawn = 0x1730118;
+    constexpr std::ptrdiff_t dwViewMatrix = 0x191CF30;
+    constexpr std::ptrdiff_t dwViewAngles = 0x1929730;
 
     constexpr std::ptrdiff_t m_iIDEntIndex = 0x15A4;
 

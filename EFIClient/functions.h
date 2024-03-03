@@ -7,3 +7,5 @@ DWORD_PTR getModuleAddress(DWORD processID, const char* moduleName);
 bool CheckDriverStatus();
 void LeftClick();
 bool stringToBool(const std::string& str);
+void AimAtPos(float x, float y, int AimSpeed, int SmoothAmount);
+double distance(int x1, int y1, int x2, int y2);
