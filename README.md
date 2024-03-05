@@ -8,13 +8,13 @@ After you open client side for first time application will create config for you
 You can always open config.cfg and set settings to your own preferations, i tries make it as easy as it can be.
 
 
-
+&nbsp;
 Default:
 
 Aimbot - Left Mouse
 
 Triggerbot - alt
-
+&nbsp;
 
 Usage:
 + Format your usb drive
