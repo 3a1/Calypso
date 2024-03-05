@@ -15,6 +15,7 @@ Default:
 Aimbot - Left Mouse
 
 Triggerbot - alt
+
 &nbsp;
 
 Usage:
