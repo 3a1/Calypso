@@ -14,14 +14,11 @@ Usage:
 + Simply drop EFIDriver(memory.efi) to pendrive then create folders in usb drive and paste bootx64.efi(D:\EFI\Boot\bootx64.efi; D:\memory.efi)
 + Boot from usb drive and try to find your usb drive by typing "FS(disk number):" then "ls". For me it always on FS2:
 + Load driver by "load memory.efi", then just type exit and load back to your system
-+ Start EFIClient application and enjoy
++ Start CS2 and EFIClient application, enjoy
 
 
 TODO:
-
-+ Smart legit aimbot.
-+ Make choose between arduino and non-adruino version
-+ Bhop
++ Arduino version
 + Clean code and fix bugs
 + Auto-update offsets
 
