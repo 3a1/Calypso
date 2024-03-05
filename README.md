@@ -9,6 +9,7 @@ You can always open config.cfg and set settings to your own preferations, i trie
 
 
 &nbsp;
+
 Default:
 
 Aimbot - Left Mouse
