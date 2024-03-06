@@ -11,7 +11,6 @@ void loop() {
 
   if (Serial.available()) {
     String myString;
-
     int arr[2];
 
     myString = Serial.readString();
