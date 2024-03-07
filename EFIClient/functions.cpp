@@ -4,8 +4,6 @@
 #include "arduino.h"
 
 #define M_PI 3.14159265358979323846264338327950288419716939937510
-ULONG ww = GetSystemMetrics(SM_CXSCREEN);
-ULONG wh = GetSystemMetrics(SM_CYSCREEN);
 
 arduino duino;
 
@@ -75,7 +73,7 @@ void LeftClick()
 
 void LeftClickArduino()
 {
-    char buffer[] = "0:0;1"; // Make sure the buffer is large enough to hold the formatted string
+    char buffer[] = "0:0;1";
     duino.send_data(buffer, sizeof(buffer));
 }
 

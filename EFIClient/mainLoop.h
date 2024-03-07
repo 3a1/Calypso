@@ -58,13 +58,12 @@ public:
         int count = 0;
         while (1)
         {
-            if (count % 1000 == 0) {
+            if (count % 100 == 0) {
                 for (int i = 0; i < 32; ++i) {
                     ppPos[i] = new PlayerPosition();
                 }
             }
 
-            // Read necessary values in a batch
             uintptr_t localPlayer = Driver::read<uintptr_t>(pid, client + offsets::dwLocalPlayerPawn);
             int localTeam;
             if (onlyEnemies) {

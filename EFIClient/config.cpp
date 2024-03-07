@@ -5,6 +5,43 @@
 #include <fstream>
 #include <algorithm>
 
+std::string arduino_name;
+
+int movement_type;
+bool only_enemies;
+int head_position;
+
+bool triggerbot;
+int triggerbot_button;
+int triggerbot_delay_b;
+int triggerbot_delay_a;
+
+bool aimbot;
+int aimbot_button;
+int aimbot_fov;
+int aimbot_speed;
+int aimbot_smooth_amount;
+
+void ConfigRead() {
+
+    std::string arduino_name = "Arduino " + config("arduino");
+
+    movement_type = std::stoi(config("movement-type"));
+    only_enemies = stringToBool(config("only-enemies"));
+    head_position = std::stoi(config("head-position"));
+
+    triggerbot = stringToBool(config("triggerbot"));
+    triggerbot_button = std::stoi(config("triggerbot-key"));
+    triggerbot_delay_b = std::stoi(config("triggerbot-delay-before-click"));
+    triggerbot_delay_a = std::stoi(config("triggerbot-delay-after-click"));
+
+    aimbot = stringToBool(config("aimbot"));
+    aimbot_button = std::stoi(config("aimbot-key"));
+    aimbot_fov = std::stoi(config("aimbot-fov"));
+    aimbot_speed = std::stoi(config("aimbot-speed"));
+    aimbot_smooth_amount = std::stoi(config("aimbot-smooth"));
+}
+
 void createConfigFile() {
     std::ofstream configFile("config.ini");
     if (configFile.is_open()) {
@@ -23,8 +60,8 @@ void createConfigFile() {
         configFile << "aimbot=true\n";
         configFile << "aimbot-key=1\n";
         configFile << "aimbot-fov=20\n";
-        configFile << "aimbot-speed=1\n";
-        configFile << "aimbot-smooth=1\n";
+        configFile << "aimbot-speed=2\n";
+        configFile << "aimbot-smooth=5\n";
         configFile.close();
         std::cout << "[Z3BRA] Config file created successfully.\n";
     }
@@ -35,7 +72,6 @@ void createConfigFile() {
 
 std::string config(std::string param)
 {
-    // std::ifstream is RAII, i.e. no need to call close
     std::ifstream cFile("config.ini");
     if (cFile.is_open())
     {

@@ -24,5 +24,3 @@ public:
 	~arduino();
 
 };
-
-//arduino* duino = nullptr;

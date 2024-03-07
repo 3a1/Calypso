@@ -51,6 +51,8 @@ bool arduino::initialize(LPCSTR device_name)
     char port[] = "\\.\\";
     bool error = false;
 
+    printf("[Z3BRA] Waiting for arduino...\n");
+
     while (!scan_devices(device_name, port))
     {
         Sleep(1000);
@@ -93,15 +95,17 @@ bool arduino::initialize(LPCSTR device_name)
         }
         if (error) {
             printf("\n[Z3BRA] There are errors with arduino connection\n");
-            printf("[Z3BRA] Probably because you're using USB HOST SHIELD\n\n");
+            printf("[Z3BRA] Probably because you're using USB HOST SHIELD\n");
+            printf("[Z3BRA] Try to restart cheat\n\n");
+            return false;
         }
         else {
-            printf("[Z3BRA] Connected to %s\n", device_name);
+            //printf("[Z3BRA] Connected to %s\n", device_name);
+            printf("[Z3BRA] Connected to Arduino\n");
             return true;
         }
     }
 }
-
 
 arduino::~arduino()
 {

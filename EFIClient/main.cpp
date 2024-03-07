@@ -9,6 +9,15 @@
 
 extern arduino duino;
 
+extern std::string arduino_name;
+
+extern int movement_type;
+extern bool only_enemies;
+extern int head_position;
+
+extern bool triggerbot;
+extern bool aimbot;
+
 int main()
 {
     if (!Driver::initialize() || !CheckDriverStatus()) {
@@ -28,28 +37,15 @@ int main()
 
     printf("[Z3BRA] EFI Driver found\n");
 
-    std::string arduino_name ="Arduino " + config("arduino");
-
-    int movement_type = std::stoi(config("movement-type"));
-    bool only_enemies = stringToBool(config("only-enemies"));
-    int head_position = std::stoi(config("head-position"));
-
-    bool triggerbot = stringToBool(config("triggerbot"));
-    int triggerbot_button = std::stoi(config("triggerbot-key"));
-    int triggerbot_delay_b = std::stoi(config("triggerbot-delay-before-click"));
-    int triggerbot_delay_a = std::stoi(config("triggerbot-delay-after-click"));
-
-    bool aimbot = stringToBool(config("aimbot"));
-    int aimbot_button = std::stoi(config("aimbot-key"));
-    int aimbot_fov = std::stoi(config("aimbot-fov"));
-    int aimbot_speed = std::stoi(config("aimbot-speed"));
-    int aimbot_smooth_amount = std::stoi(config("aimbot-smooth"));
+    ConfigRead();
 
     printf("[Z3BRA] Config file found\n");
 
     if (movement_type == 1) {
-        printf("[Z3BRA] Waiting for arduino...\n");
-        duino.initialize(arduino_name.c_str());
+        if (!duino.initialize(arduino_name.c_str())) {
+            system("pause"); 
+            exit(1);
+        }
     }
 
     auto hwnd = FindWindowA(NULL, "Counter-Strike 2");
@@ -70,7 +66,7 @@ int main()
     }
     printf("[Z3BRA] client.dll base module address found\n");
 
-    printf("[Z3BRA] Starting main thread...\n");
+    printf("[Z3BRA] Starting loop thread...\n");
 
     Loop loopInstance(pid, client, triggerbot, only_enemies, head_position);
     std::thread updateThread(&Loop::updateLoop, &loopInstance);
@@ -78,33 +74,39 @@ int main()
 
     if (movement_type == 1) {
         if (triggerbot && aimbot) {
-            std::thread triggerbotThread(Arduino::Triggerbot::start, std::ref(loopInstance), triggerbot_delay_b, triggerbot_delay_a, triggerbot_button);
-            std::thread aimbotThread(Arduino::Aimbot::start, std::ref(loopInstance), aimbot_speed, aimbot_smooth_amount, aimbot_fov, aimbot_button);
+            std::thread triggerbotThread(Arduino::Triggerbot::start, std::ref(loopInstance));
+            std::thread aimbotThread(Arduino::Aimbot::start, std::ref(loopInstance));
+            printf("[Z3BRA] Aimbot & Triggerbot threads started\n");
             aimbotThread.join();
 
         }
         else if (aimbot) {
-            std::thread aimbotThread(Arduino::Aimbot::start, std::ref(loopInstance), aimbot_speed, aimbot_smooth_amount, aimbot_fov, aimbot_button);
+            std::thread aimbotThread(Arduino::Aimbot::start, std::ref(loopInstance));
+            printf("[Z3BRA] Aimbot thread started\n");
             aimbotThread.join();
 
         }
         else if (triggerbot) {
-            std::thread triggerbotThread(Arduino::Triggerbot::start, std::ref(loopInstance), triggerbot_delay_b, triggerbot_delay_a, triggerbot_button);
+            std::thread triggerbotThread(Arduino::Triggerbot::start, std::ref(loopInstance));
+            printf("[Z3BRA] Triggerbot thread started\n");
             triggerbotThread.join();
         }
         
     } else if (movement_type == 2) {
         if (triggerbot && aimbot) {
-            std::thread triggerbotThread(Mouse::Triggerbot::start, std::ref(loopInstance), triggerbot_delay_b, triggerbot_delay_a, triggerbot_button);
-            std::thread aimbotThread(Mouse::Aimbot::start, std::ref(loopInstance), aimbot_speed, aimbot_smooth_amount, aimbot_fov, aimbot_button);
+            std::thread triggerbotThread(Mouse::Triggerbot::start, std::ref(loopInstance));
+            std::thread aimbotThread(Mouse::Aimbot::start, std::ref(loopInstance));
+            printf("[Z3BRA] Aimbot & Triggerbot threads started\n");
             aimbotThread.join();
 
         } else if (aimbot) {
-            std::thread aimbotThread(Mouse::Aimbot::start, std::ref(loopInstance), aimbot_speed, aimbot_smooth_amount, aimbot_fov, aimbot_button);
+            std::thread aimbotThread(Mouse::Aimbot::start, std::ref(loopInstance));
+            printf("[Z3BRA] Aimbot thread started\n");
             aimbotThread.join();
 
         } else if (triggerbot) {
-            std::thread triggerbotThread(Mouse::Triggerbot::start, std::ref(loopInstance), triggerbot_delay_b, triggerbot_delay_a, triggerbot_button);
+            std::thread triggerbotThread(Mouse::Triggerbot::start, std::ref(loopInstance));
+            printf("[Z3BRA] Triggerbot thread started\n");
             triggerbotThread.join();
         }
     }

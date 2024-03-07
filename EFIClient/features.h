@@ -2,23 +2,22 @@
 #include "mainLoop.h"
 #include "functions.h"
 
-
 namespace Mouse {
 	namespace Aimbot {
-		void start(Loop& loopInstance, int AimSpeed, int SmoothAmount, int fov, int button);
+		void start(Loop& loopInstance);
 	}
 
 	namespace Triggerbot {
-		void start(Loop& loopInstance, int triggerbot_delay_b, int triggerbot_delay_a, int button);
+		void start(Loop& loopInstance);
 	}
 }
 
 namespace Arduino {
 	namespace Aimbot {
-		void start(Loop& loopInstance, int AimSpeed, int SmoothAmount, int fov, int button);
+		void start(Loop& loopInstance);
 	}
 
 	namespace Triggerbot {
-		void start(Loop& loopInstance, int triggerbot_delay_b, int triggerbot_delay_a, int button);
+		void start(Loop& loopInstance);
 	}
 }
