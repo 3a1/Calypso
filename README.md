@@ -31,5 +31,6 @@ TODO:
 + Clean code and fix bugs
 + Auto-update offsets
 
-Constribution:
-+ [EFI_Driver_Access](https://github.com/TheCruZ/EFI_Driver_Access)
+#Credits:
++ [EFI_Driver](https://github.com/TheCruZ/EFI_Driver_Access)
++ [Arduino Code](https://github.com/backpack-0x1337/CyberAim-Valorant/)
