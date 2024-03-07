@@ -36,6 +36,7 @@ Click on image below to watch it on YouTube
 ## TODO:
 + Add Raspberry Pi Pico W Support(?)
 + Add USB Host Shield support
++ Get module base address via EFI not usermode(?)
 + Add fullscreen esp(?)
 + Code own EFI Driver(?)
 + Clean code and fix bugs
