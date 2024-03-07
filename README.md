@@ -29,6 +29,8 @@ UEFI Driver + Arduino Support CS2 Cheat
 + Start CS2 and open EFIClient, enjoy 
 
 ## Showcase:
+Click on image below to watch it on YouTube
+
 [![Click](http://i3.ytimg.com/vi/J-yl2FgI6eo/hqdefault.jpg)](https://www.youtube.com/watch?v=J-yl2FgI6eo)
 
 ## TODO:
