@@ -36,6 +36,7 @@ Click on image below to watch it on YouTube
 ## TODO:
 + Add Raspberry Pi Pico W Support(?)
 + Add USB Host Shield support
++ Add fullscreen esp(?)
 + Clean code and fix bugs
 + Auto-update offsets
 
