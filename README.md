@@ -28,10 +28,10 @@ UEFI Driver + Arduino Support CS2 Cheat
 + Load driver by "load memory.efi", then just type exit and load back to your system
 + Start CS2 and open EFIClient, enjoy 
 
-## Showcase:
+## Usage & Showcase:
 Click on image below to watch it on YouTube
 
-[![Click](http://i3.ytimg.com/vi/J-yl2FgI6eo/hqdefault.jpg)](https://www.youtube.com/watch?v=XIvGtfvqfMs)
+[![Click](http://i3.ytimg.com/vi/J-yl2FgI6eo/hqdefault.jpg)](https://youtu.be/FY2V1YdpacM)
 
 ## TODO:
 + Add Raspberry Pi Pico W Support(?)
