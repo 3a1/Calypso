@@ -1,22 +1,27 @@
-# **CS2-UEFI-Arduino**
+# CS2-UEFI-Arduino
 
-UEFI Driver + Aduino Leonardo CS2 Cheat
+UEFI Driver + Arduino Support CS2 Cheat
 
-After you open client side for first time application will create config for you with my own settings that i use for full legit playstyle.
 You can always open config.cfg and set settings to your own preferations, i tries make it as easy as it can be.
 
+## Setup
+- Usb Drive
+- [Optional]Arduino
 
-&nbsp;
+(Any arduino that supports Mouse.h library)
 
-Default:
+## Features
+- Aimbot
+- Triggerbot
+- Config system
+- Arduino && Non-Arduino Support
 
-Aimbot - Left Mouse
+## Default Key Binds:
 
-Triggerbot - alt
+- **Aimbot**: LMouse
+- **Triggerbot**: Alt
 
-&nbsp;
-
-# Usage:
+## Usage:
 + Format your usb drive
 + Download shell.efi from [this](https://github.com/tianocore/edk2-archive/blob/master/ShellBinPkg/UefiShell/X64/Shell.efi) repo and rename it to bootx64.efi
 + Compile EFIDriver from my repo (in linux type just "make" in console and done)
@@ -26,11 +31,11 @@ Triggerbot - alt
 + Start CS2 and EFIClient application, enjoy
 
 
-TODO:
-+ Arduino version
+## TODO:
++ Add Raspberry Pi Pico W Support(?)
 + Clean code and fix bugs
 + Auto-update offsets
 
-#Credits:
-+ [EFI_Driver](https://github.com/TheCruZ/EFI_Driver_Access)
+## Credits:
++ [EFI Driver](https://github.com/TheCruZ/EFI_Driver_Access)
 + [Arduino Code](https://github.com/backpack-0x1337/CyberAim-Valorant/)
