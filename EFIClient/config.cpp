@@ -6,23 +6,25 @@
 #include <algorithm>
 
 void createConfigFile() {
-    std::ofstream configFile("config.cfg");
+    std::ofstream configFile("config.ini");
     if (configFile.is_open()) {
-        configFile << "# 1 = arduino 2 = default mouse movement\n";
-        configFile << "movement_type=2\n";
-        configFile << "head_position=65\n";
-        configFile << "only_enemies=true\n\n";
-        configFile << "# Triggerbot\n";
+        configFile << "[Setup]\n";
+        configFile << "movement-type=1      # 1 = arduino 2 = default mouse movement\n";
+        configFile << "arduino=Leonardo     # change this to your arduino name in Device Manager\n\n";
+        configFile << "[Settings]\n";
+        configFile << "head-position=65     # change this if the aimbot is aiming below or above the head\n";
+        configFile << "only-enemies=true    # true = aiming only on enemies false = on teammates too\n\n";
+        configFile << "[Triggerbot]\n";
         configFile << "triggerbot=true\n";
-        configFile << "triggerbot_button=164\n";
-        configFile << "triggerbot_delay_before_click=0\n";
-        configFile << "triggerbot_delay_after_click=200\n\n";
-        configFile << "# Aimbot\n";
+        configFile << "triggerbot-key=164\n";
+        configFile << "triggerbot-delay-before-click=0\n";
+        configFile << "triggerbot-delay-after-click=200\n\n";
+        configFile << "[Aimbot]\n";
         configFile << "aimbot=true\n";
-        configFile << "aimbot_button=1\n";
-        configFile << "aimbot_fov=20\n";
-        configFile << "aimbot_speed=2\n";
-        configFile << "aimbot_smooth_amount=10\n";
+        configFile << "aimbot-key=1\n";
+        configFile << "aimbot-fov=20\n";
+        configFile << "aimbot-speed=1\n";
+        configFile << "aimbot-smooth=1\n";
         configFile.close();
         std::cout << "[Z3BRA] Config file created successfully.\n";
     }
@@ -34,15 +36,21 @@ void createConfigFile() {
 std::string config(std::string param)
 {
     // std::ifstream is RAII, i.e. no need to call close
-    std::ifstream cFile("config.cfg");
+    std::ifstream cFile("config.ini");
     if (cFile.is_open())
     {
         std::string line;
         while (getline(cFile, line)) {
             line.erase(std::remove_if(line.begin(), line.end(), isspace),
                 line.end());
-            if (line[0] == '#' || line.empty())
+            if (line[0] == '[' || line[0] == '#' || line.empty())
                 continue;
+
+            auto commentPos = line.find('#');
+            if (commentPos != std::string::npos) {
+                line.erase(commentPos);
+            }
+
             auto delimiterPos = line.find("=");
             auto name = line.substr(0, delimiterPos);
             auto value = line.substr(delimiterPos + 1);

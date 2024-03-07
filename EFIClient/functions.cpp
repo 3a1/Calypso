@@ -1,10 +1,13 @@
 #include "functions.h"
 
 #include "includes.h"
+#include "arduino.h"
 
 #define M_PI 3.14159265358979323846264338327950288419716939937510
 ULONG ww = GetSystemMetrics(SM_CXSCREEN);
 ULONG wh = GetSystemMetrics(SM_CYSCREEN);
+
+arduino duino;
 
 DWORD_PTR getModuleAddress(DWORD processID, const char* moduleName)
 {
@@ -68,6 +71,12 @@ void LeftClick()
     Input.type = INPUT_MOUSE;
     Input.mi.dwFlags = MOUSEEVENTF_LEFTUP;
     ::SendInput(1, &Input, sizeof(INPUT));
+}
+
+void LeftClickArduino()
+{
+    char buffer[] = "0:0;1"; // Make sure the buffer is large enough to hold the formatted string
+    duino.send_data(buffer, sizeof(buffer));
 }
 
 bool stringToBool(const std::string& str) {
@@ -156,6 +165,96 @@ void AimAtPos(float x, float y, int AimSpeed, int SmoothAmount)
             }
         }
         mouse_event(0x0001, (UINT)(TargetX), (UINT)(TargetY), NULL, NULL);
+        return;
+    }
+}
+
+void AimAtPosArduino(float x, float y, int AimSpeed, int SmoothAmount)
+{
+
+    float TargetX = 0;
+    float TargetY = 0;
+
+    POINT cursorPos;
+    GetCursorPos(&cursorPos);
+
+    int ScreenCenterX = cursorPos.x;
+    int ScreenCenterY = cursorPos.y;
+
+    bool Smooth = true;
+
+    if (AimSpeed == 0) AimSpeed = 1;
+    if (SmoothAmount == 0) SmoothAmount = 1;
+
+    if (x != 0)
+    {
+        if (x > ScreenCenterX)
+        {
+            TargetX = -(ScreenCenterX - x);
+            TargetX /= AimSpeed;
+            if (TargetX + ScreenCenterX > ScreenCenterX * 2) TargetX = 0;
+        }
+
+        if (x < ScreenCenterX)
+        {
+            TargetX = x - ScreenCenterX;
+            TargetX /= AimSpeed;
+            if (TargetX + ScreenCenterX < 0) TargetX = 0;
+        }
+    }
+
+    if (y != 0)
+    {
+        if (y > ScreenCenterY)
+        {
+            TargetY = -(ScreenCenterY - y);
+            TargetY /= AimSpeed;
+            if (TargetY + ScreenCenterY > ScreenCenterY * 2) TargetY = 0;
+        }
+
+        if (y < ScreenCenterY)
+        {
+            TargetY = y - ScreenCenterY;
+            TargetY /= AimSpeed;
+            if (TargetY + ScreenCenterY < 0) TargetY = 0;
+        }
+    }
+
+    if (!Smooth)
+    {
+        mouse_event(0x0001, (UINT)(TargetX), (UINT)(TargetY), NULL, NULL);
+        return;
+    }
+    else
+    {
+        TargetX /= SmoothAmount;
+        TargetY /= SmoothAmount;
+        if (abs(TargetX) < 1)
+        {
+            if (TargetX > 0)
+            {
+                TargetX = 1;
+            }
+            if (TargetX < 0)
+            {
+                TargetX = -1;
+            }
+        }
+        if (abs(TargetY) < 1)
+        {
+            if (TargetY > 0)
+            {
+                TargetY = 1;
+            }
+            if (TargetY < 0)
+            {
+                TargetY = -1;
+            }
+        }
+
+        char buffer[20];
+        sprintf_s(buffer, "%d:%d;0", (int)TargetX, (int)TargetY);
+        duino.send_data(buffer, sizeof(buffer));
         return;
     }
 }

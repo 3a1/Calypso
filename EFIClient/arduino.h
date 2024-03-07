@@ -19,8 +19,10 @@ public:
 
 	bool send_data(char* buffer, DWORD buffer_size);
 
-	arduino(LPCSTR device_name);
+	bool initialize(LPCSTR device_name);
 
 	~arduino();
 
 };
+
+//arduino* duino = nullptr;

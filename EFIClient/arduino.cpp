@@ -46,9 +46,10 @@ bool arduino::send_data(char* buffer, DWORD buffer_size)
     return WriteFile(this->arduino_handle, buffer, buffer_size, &bytes_written, NULL);
 }
 
-arduino::arduino(LPCSTR device_name)
+bool arduino::initialize(LPCSTR device_name)
 {
     char port[] = "\\.\\";
+    bool error = false;
 
     while (!scan_devices(device_name, port))
     {
@@ -64,6 +65,7 @@ arduino::arduino(LPCSTR device_name)
         {
             printf("GetCommState() failed\n");
             CloseHandle(this->arduino_handle);
+            error = true;
         }
 
         dcb.BaudRate = CBR_9600;
@@ -74,6 +76,7 @@ arduino::arduino(LPCSTR device_name)
         {
             printf("SetCommState() failed\n");
             CloseHandle(this->arduino_handle);
+            error = true;
         }
 
         COMMTIMEOUTS cto = { 0 };
@@ -86,10 +89,19 @@ arduino::arduino(LPCSTR device_name)
         {
             printf("SetCommTimeouts() failed\n");
             CloseHandle(this->arduino_handle);
+            error = true;
         }
-        printf("[Z] Connected to %s\n", device_name);
+        if (error) {
+            printf("\n[Z3BRA] There are errors with arduino connection\n");
+            printf("[Z3BRA] Probably because you're using USB HOST SHIELD\n\n");
+        }
+        else {
+            printf("[Z3BRA] Connected to %s\n", device_name);
+            return true;
+        }
     }
 }
+
 
 arduino::~arduino()
 {
