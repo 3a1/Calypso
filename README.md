@@ -16,7 +16,7 @@ Triggerbot - alt
 
 &nbsp;
 
-**Usage:**
+# **Usage:**
 + Format your usb drive
 + Download shell.efi from [this](https://github.com/tianocore/edk2-archive/blob/master/ShellBinPkg/UefiShell/X64/Shell.efi) repo and rename it to bootx64.efi
 + Compile EFIDriver from my repo (in linux type just "make" in console and done)
