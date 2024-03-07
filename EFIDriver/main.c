@@ -259,7 +259,7 @@ ExitBootServicesEvent(
 	// Print some text so we know it works (300iq)
 	ST->ConOut->SetAttribute(ST->ConOut, EFI_WHITE | EFI_BACKGROUND_BLUE);
 	ST->ConOut->ClearScreen(ST->ConOut);
-	Print(L"Driver seems to be working as expected! Windows is booting now...\n");
+	Print(L"[Z3BRA] Driver seems to be working as expected! Windows is booting now...\n");
 }
 
 // Replaces service table pointer with desired one
