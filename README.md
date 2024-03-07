@@ -2,23 +2,21 @@
 
 UEFI Driver + Arduino Support CS2 Cheat
 
-You can always open config.cfg and set settings to your own preferations, i tries make it as easy as it can be.
-
 ## Setup
 - Usb Drive
 - [Optional]Arduino
 
 (Any arduino that supports Mouse.h library)
 
-## Features
+## Genaral
 - Aimbot
 - Triggerbot
 - Config system
-- Arduino && Non-Arduino Support
+- Can be used with or without Arduino
 
 ## Default Key Binds:
 
-- **Aimbot**: LMouse
+- **Aimbot**: Left Click
 - **Triggerbot**: Alt
 
 ## Usage:
@@ -28,7 +26,7 @@ You can always open config.cfg and set settings to your own preferations, i trie
 + Simply drop EFIDriver(memory.efi) to pendrive then create folders in usb drive and paste bootx64.efi(D:\EFI\Boot\bootx64.efi; D:\memory.efi)
 + Boot from usb drive and try to find your usb drive by typing "FS(disk number):" then "ls". For me it always on FS2:
 + Load driver by "load memory.efi", then just type exit and load back to your system
-+ Start CS2 and EFIClient application, enjoy
++ Start CS2 and open EFIClient, enjoy 
 
 
 ## TODO:
