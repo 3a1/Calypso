@@ -9,8 +9,8 @@ UEFI Driver + Arduino Support CS2 Cheat
 (Any arduino that supports Mouse.h library)
 
 ## Genaral
-- Aimbot
-- Triggerbot
+- Aimbot (Customizable field of view, smoothing, speed and key).
+- Triggerbot (You can customize triggerbot delay and key)
 - Config system
 - Can be used with or without Arduino
 
