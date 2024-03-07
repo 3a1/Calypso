@@ -33,6 +33,7 @@ UEFI Driver + Arduino Support CS2 Cheat
 
 ## TODO:
 + Add Raspberry Pi Pico W Support(?)
++ Add USB Host Shield support
 + Clean code and fix bugs
 + Auto-update offsets
 
