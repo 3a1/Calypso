@@ -29,7 +29,7 @@ UEFI Driver + Arduino Support CS2 Cheat
 + Start CS2 and open EFIClient, enjoy 
 
 ## Showcase:
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/watch?v=J-yl2FgI6eo/0.jpg)](https://www.youtube.com/watch?v=J-yl2FgI6eo)
+[![IMAGE ALT TEXT HERE](http://i3.ytimg.com/vi/J-yl2FgI6eo/hqdefault.jpg)](https://www.youtube.com/watch?v=J-yl2FgI6eo)
 
 ## TODO:
 + Add Raspberry Pi Pico W Support(?)
