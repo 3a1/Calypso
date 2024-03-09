@@ -2,6 +2,8 @@
 
 UEFI Driver + Arduino Support CS2 Cheat
 
+Regular updates are temporarily frozen due to a working for huge update. (3.0)
+
 ## Setup
 - Usb Drive
 - [Optional]Arduino
@@ -20,13 +22,21 @@ UEFI Driver + Arduino Support CS2 Cheat
 - **Triggerbot**: Alt
 
 ## Usage:
-+ Format your usb drive
-+ Download shell.efi from [this](https://github.com/tianocore/edk2-archive/blob/master/ShellBinPkg/UefiShell/X64/Shell.efi) repo and rename it to bootx64.efi
-+ Compile EFIDriver from my repo (in linux type just "make" in console and done)
-+ Simply drop EFIDriver(memory.efi) to pendrive then create folders in usb drive and paste bootx64.efi(D:\EFI\Boot\bootx64.efi; D:\memory.efi)
-+ Boot from usb drive and try to find your usb drive by typing "FS(disk number):" then "ls". For me it always on FS2:
-+ Load driver by "load memory.efi", then just type exit and load back to your system
-+ Start CS2 and open EFIClient, enjoy 
+1. Format your usb drive
+2. Download shell.efi from [this](https://github.com/tianocore/edk2-archive/blob/master/ShellBinPkg/UefiShell/X64/Shell.efi) repo and rename it to bootx64.efi
+3. Compile EFIDriver from my repo (in linux type just "make" in console and done)
+4. Simply drop EFIDriver(memory.efi) to pendrive then create folders in usb drive and paste bootx64.efi:
+```
+USB:.
+ │   rainbow.efi
+ │
+ └───EFI
+      └───Boot
+              bootx64.efi
+```
+5. Boot from usb drive and try to find your usb drive by typing "FS(disk number):" then "ls". For me it always on FS2:
+6. Load driver by "load memory.efi", then just type exit and load back to your system
+7. Start CS2 and open EFIClient, enjoy 
 
 ## Usage & Showcase:
 Click on image below to watch it on YouTube
