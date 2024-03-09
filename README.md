@@ -28,7 +28,7 @@ Regular updates are temporarily frozen due to a working for huge update. (3.0)
 4. Simply drop EFIDriver(memory.efi) to pendrive then create folders in usb drive and paste bootx64.efi:
 ```
 USB:.
- │   rainbow.efi
+ │   memory.efi
  │
  └───EFI
       └───Boot
