@@ -4,6 +4,9 @@ UEFI Driver + Arduino Support CS2 Cheat
 
 Regular updates are temporarily frozen due to a working for huge update. (3.0)
 
+Link to the compiled EFIDriver (will be here until I change the driver so it can be compiled through Visual Studio):
+https://mega.nz/file/Go4UmR5Z#C2vDCFhq5Ix0KZfJMmMTuMr8Pv09l34N-_GFsOkLwMk
+
 ## Setup
 - Usb Drive
 - [Optional]Arduino
