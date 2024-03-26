@@ -5,6 +5,9 @@
 #include <efilib.h>
 #include "dummy.h"
 
+#define DRIVER_SIZE 26214400 // 25mb should be enough
+__attribute__((section(".text"))) char DriverBuffer[DRIVER_SIZE]; // this fixing BSOD on some systems
+
 // Defines used to check if call is really coming from client
 #define baseOperation 0x6256
 #define VARIABLE_NAME L"keRdjvbgC"
