@@ -1,108 +1,113 @@
 #include "config.h"
-#include "includes.h"
 
-#include <iostream>
-#include <fstream>
-#include <algorithm>
+config::Arduino config::arduino;
+config::Misc config::misc;
+config::Triggerbot config::triggerbot;
+config::Aimbot config::aimbot;
 
-std::string arduino_name;
-
-int movement_type;
-bool only_enemies;
-int head_position;
-
-bool triggerbot;
-int triggerbot_button;
-int triggerbot_delay_b;
-int triggerbot_delay_a;
-
-bool aimbot;
-int aimbot_button;
-int aimbot_fov;
-int aimbot_speed;
-int aimbot_smooth_amount;
-
-void ConfigRead() {
-
-    std::string arduino_name = "Arduino " + config("arduino");
-
-    movement_type = std::stoi(config("movement-type"));
-    only_enemies = stringToBool(config("only-enemies"));
-    head_position = std::stoi(config("head-position"));
-
-    triggerbot = stringToBool(config("triggerbot"));
-    triggerbot_button = std::stoi(config("triggerbot-key"));
-    triggerbot_delay_b = std::stoi(config("triggerbot-delay-before-click"));
-    triggerbot_delay_a = std::stoi(config("triggerbot-delay-after-click"));
-
-    aimbot = stringToBool(config("aimbot"));
-    aimbot_button = std::stoi(config("aimbot-key"));
-    aimbot_fov = std::stoi(config("aimbot-fov"));
-    aimbot_speed = std::stoi(config("aimbot-speed"));
-    aimbot_smooth_amount = std::stoi(config("aimbot-smooth"));
-}
-
-void createConfigFile() {
-    std::ofstream configFile("config.ini");
-    if (configFile.is_open()) {
-        configFile << "[Setup]\n";
-        configFile << "movement-type=1      # 1 = arduino 2 = default mouse movement\n";
-        configFile << "arduino=Leonardo     # change this to your arduino name in Device Manager\n\n";
-        configFile << "[Settings]\n";
-        configFile << "head-position=65     # change this if the aimbot is aiming below or above the head\n";
-        configFile << "only-enemies=true    # true = aiming only on enemies false = on teammates too\n\n";
-        configFile << "[Triggerbot]\n";
-        configFile << "triggerbot=true\n";
-        configFile << "triggerbot-key=164\n";
-        configFile << "triggerbot-delay-before-click=0\n";
-        configFile << "triggerbot-delay-after-click=200\n\n";
-        configFile << "[Aimbot]\n";
-        configFile << "aimbot=true\n";
-        configFile << "aimbot-key=1\n";
-        configFile << "aimbot-fov=20\n";
-        configFile << "aimbot-speed=2\n";
-        configFile << "aimbot-smooth=5\n";
-        configFile.close();
-        std::cout << "[Z3BRA] Config file created successfully.\n";
-    }
-    else {
-        std::cerr << "Unable to create config file.\n";
-    }
-}
-
-std::string config(std::string param)
+std::string config::config(std::string section, std::string param)
 {
     std::ifstream cFile("config.ini");
     if (cFile.is_open())
     {
         std::string line;
-        while (getline(cFile, line)) {
-            line.erase(std::remove_if(line.begin(), line.end(), isspace),
-                line.end());
-            if (line[0] == '[' || line[0] == '#' || line.empty())
+        std::string currentSection;
+        while (getline(cFile, line))
+        {
+            line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
+            if (line.empty() || line[0] == ';' || line[0] == '#')
                 continue;
 
+            if (line[0] == '[')
+            {
+                currentSection = line.substr(1, line.find(']') - 1);
+                continue;
+            }
+
             auto commentPos = line.find('#');
-            if (commentPos != std::string::npos) {
+            if (commentPos != std::string::npos)
+            {
                 line.erase(commentPos);
             }
 
             auto delimiterPos = line.find("=");
             auto name = line.substr(0, delimiterPos);
             auto value = line.substr(delimiterPos + 1);
-            if (name == param) {
+            if (currentSection == section && name == param)
+            {
                 return value;
             }
         }
+    }
+    else
+    {
+        utils::printc("[-]", "Config file not found", RED);
+        createConfigFile();
+        utils::printc("[!]", "Please restart cheat.", YELLOW);
 
+        system("pause");
+        exit(0);
+    }
+    utils::printc("[-]", ("Config file found, but variable " + section + "." + param + " not found").c_str(), RED);
+    utils::printc("[!]", "Please delete config file and restart cheat.", YELLOW);
+    system("pause");
+    exit(0);
+}
+
+void config::readConfigFile()
+{
+    config::arduino.enable = utils::stob(config("Arduino", "enable"));
+    config::arduino.name = config("Arduino", "name");
+
+    config::misc.only_enemies = utils::stob(config("Settings", "only-enemies"));
+    config::misc.head_position = std::stoi(config("Settings", "head-position"));
+    config::misc.tg_with_ab = utils::stob(config("Settings", "tb-with-ab"));
+
+    config::triggerbot.enable = utils::stob(config("Triggerbot", "enable"));
+    config::triggerbot.key = std::stoi(config("Triggerbot", "key"));
+    config::triggerbot.delay_a = std::stoi(config("Triggerbot", "delay-a"));
+    config::triggerbot.delay_b = std::stoi(config("Triggerbot", "delay-b"));
+
+    config::aimbot.enable = utils::stob(config("Aimbot", "enable"));
+    config::aimbot.key = std::stoi(config("Aimbot", "key"));
+    config::aimbot.fov = std::stoi(config("Aimbot", "fov"));
+    config::aimbot.speed = std::stoi(config("Aimbot", "speed"));
+    config::aimbot.smooth = std::stoi(config("Aimbot", "smooth"));
+
+    utils::printc("[+]", "Config file found", GREEN);
+}
+
+void config::createConfigFile()
+{
+    std::ofstream configFile("config.ini");
+    if (configFile.is_open())
+    {
+        configFile << "# Standard config file has optimal settings for legit gameplay\n";
+        configFile << "# If you want to use cheat without arduino change enable to false in Arduino section\n";
+        configFile << "# Standart config has small fov and only-enemy=true so you need to aim near to the head to see that it works\n\n";
+        configFile << "[Arduino]\n";
+        configFile << "enable=true       # if you dont have arduino change to false\n";
+        configFile << "name=Leonardo     # change this to your arduino name in Device Manager\n\n";
+        configFile << "[Settings]\n";
+        configFile << "head-position=65     # change this if aimbot is aiming below or above the head\n";
+        configFile << "only-enemies=true    # true = aiming only on enemies false = on teammates too\n";
+        configFile << "tb-with-ab=false     # true = when you holding triggerbot key it will also triggers aimbot\n\n";
+        configFile << "[Triggerbot]\n";
+        configFile << "enable=true\n";
+        configFile << "key=164\n";
+        configFile << "delay-b=0     # delay before click\n";
+        configFile << "delay-a=200   # delay after click\n\n";
+        configFile << "[Aimbot]\n";
+        configFile << "enable=true\n";
+        configFile << "key=1\n";
+        configFile << "fov=20\n";
+        configFile << "speed=2\n";
+        configFile << "smooth=5\n";
+        configFile.close();
+        utils::printc("[+]", "Config file created successfully.", GREEN);
     }
     else {
-        std::cout << "[Z3BRA] Didnt find config file, creating one...\n";
-
-        createConfigFile();
-        
-        std::cout << "[Z3BRA] Please restart cheat.\n";
-
+        utils::printc("[-]", "Unable to create config file.", RED);
         system("pause");
         exit(0);
     }

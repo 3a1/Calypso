@@ -1,12 +1,9 @@
 #pragma once
-#include <Windows.h>
-#include <winternl.h>
 #pragma comment(lib, "ntdll.lib")
-#include <stdio.h>
-
+#include "includes.h"
 #define baseOperation 0x6256
 
-#define VARIABLE_NAME L"keRdjvbgC"
+#define VARIABLE_NAME L"XTbdNErLv"
 #define COMMAND_MAGIC baseOperation*0x7346
 
 #define EFI_VARIABLE_NON_VOLATILE                          0x00000001
@@ -80,21 +77,21 @@ typedef struct _RTL_PROCESS_MODULES
 	RTL_PROCESS_MODULE_INFORMATION Modules[1];
 } RTL_PROCESS_MODULES, * PRTL_PROCESS_MODULES;
 
-uintptr_t GetKernelModuleAddress(char* module_name);
-uintptr_t GetKernelModuleExport(uintptr_t kernel_module_base, char* function_name);
-NTSTATUS SetSystemEnvironmentPrivilege(BOOLEAN Enable, PBOOLEAN WasEnabled);
+uintptr_t getKernelModuleAddress(char* module_name);
+uintptr_t getKernelModuleExport(uintptr_t kernel_module_base, char* function_name);
+NTSTATUS setSystemEnvironmentPrivilege(BOOLEAN Enable, PBOOLEAN WasEnabled);
 
-namespace Driver
+namespace driver
 {
-	bool	initialize();
+	bool	init();
 	extern uintptr_t currentProcessId;
 	extern HANDLE driverH;
 
-	void SendCommand(MemoryCommand* cmd);
+	void sendCommand(MemoryCommand* cmd);
 	NTSTATUS copy_memory(uintptr_t src_process_id, uintptr_t src_address, uintptr_t dest_process_id, uintptr_t dest_address, size_t size);
 	NTSTATUS read_memory(uintptr_t process_id, uintptr_t address, uintptr_t buffer, size_t size);
 	NTSTATUS write_memory(uintptr_t process_id, uintptr_t address, uintptr_t buffer, size_t size);
-	uintptr_t GetBaseAddress(uintptr_t pid);
+	uintptr_t getBaseAddress(uintptr_t pid);
 
 	template <typename T>
 	T read(const uintptr_t process_id, const uintptr_t address, PNTSTATUS out_status = 0)

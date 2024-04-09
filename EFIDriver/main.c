@@ -3,76 +3,12 @@
 
 #include <efi.h>
 #include <efilib.h>
-#include "dummy.h"
 
-#define DRIVER_SIZE 26214400 // 25mb should be enough
-__attribute__((section(".text"))) char DriverBuffer[DRIVER_SIZE]; // this fixing BSOD on some systems
+#include "include/dummy.h"
+#include "include/general.h"
 
-// Defines used to check if call is really coming from client
-#define baseOperation 0x6256
-#define VARIABLE_NAME L"keRdjvbgC"
-
-//This is only to modify every command/magic key with only 1 def and don't need to go everywhere, the compiler will automatically parse the operation to number
-#define COMMAND_MAGIC baseOperation*0x7346
-
-
-// Dummy protocol struct
-typedef struct _DummyProtocalData{
-	UINTN blank;
-} DummyProtocalData;
-
-typedef unsigned long long ptr64;
-
-// Struct containing data used to communicate with the client
-typedef struct _MemoryCommand 
-{
-	int magic;
-	int operation;
-	ptr64 data[10];
-} MemoryCommand;
-
-// Functions (Windows only)
-typedef int (MicrosoftCallingType *PsLookupProcessByProcessId)(
-	void* ProcessId,
-	void* OutPEProcess
-);
-typedef void* (MicrosoftCallingType *PsGetProcessSectionBaseAddress)(
-	void* PEProcess
-);
-typedef int (MicrosoftCallingType *MmCopyVirtualMemory)(
-	void* SourceProcess,
-	void* SourceAddress,
-	void* TargetProcess,
-	void* TargetAddress,
-	ptr64 BufferSize,
-	char PreviousMode,
-	void* ReturnSize
-);
-
-// Our protocol GUID (should be different for every driver)
-static const EFI_GUID ProtocolGuid
-	= { 0x2f84893e, 0xfd5e, 0x2038, {0x8d, 0x9e, 0x20, 0xa7, 0xaf, 0x9c, 0x32, 0xf1} };
-
-// VirtualAddressMap GUID (gEfiEventVirtualAddressChangeGuid)
-static const EFI_GUID VirtualGuid
-	= { 0x13FA7698, 0xC831, 0x49C7, { 0x87, 0xEA, 0x8F, 0x43, 0xFC, 0xC2, 0x51, 0x96 }}; //we will remove later shouldn't be important
-
-// ExitBootServices GUID (gEfiEventExitBootServicesGuid)
-static const EFI_GUID ExitGuid
-	= { 0x27ABF055, 0xB1B8, 0x4C26, { 0x80, 0x48, 0x74, 0x8F, 0x37, 0xBA, 0xA2, 0xDF }}; //we will remove later shouldn't be important
-
-// Pointers to original functions
-static EFI_SET_VARIABLE oSetVariable = NULL;
-
-// Global declarations
-static EFI_EVENT NotifyEvent = NULL;
-static EFI_EVENT ExitEvent = NULL;
-static BOOLEAN Virtual = FALSE;
-static BOOLEAN Runtime = FALSE;
-
-static PsLookupProcessByProcessId GetProcessByPid = (PsLookupProcessByProcessId)0;
-static PsGetProcessSectionBaseAddress GetBaseAddress = (PsGetProcessSectionBaseAddress)0;
-static MmCopyVirtualMemory MCopyVirtualMemory = (MmCopyVirtualMemory)0;
+// Made by: Samuel Tulach
+// Direct Calling By: The CruZ
 
 // Function that actually performs the r/w
 EFI_STATUS
@@ -86,7 +22,7 @@ RunCommand(MemoryCommand* cmd)
 	}
 
 	// Copy operation
-	if (cmd->operation == baseOperation * 0x823) 
+	if (cmd->operation == COPY_OPERATION) 
 	{
 		void* src_process_id = (void*)cmd->data[0];
 		void* src_address = (void*)cmd->data[1];
@@ -125,7 +61,7 @@ RunCommand(MemoryCommand* cmd)
 		return EFI_SUCCESS;
 	}
 	
-	if (cmd->operation == baseOperation * 0x612) 
+	if (cmd->operation == EXPORT_OPERATION) 
 	{
 		GetProcessByPid = (PsLookupProcessByProcessId)cmd->data[0];
 		GetBaseAddress = (PsGetProcessSectionBaseAddress)cmd->data[1];
@@ -136,7 +72,7 @@ RunCommand(MemoryCommand* cmd)
 	}
 	
 	//Get Process Base Address
-	if (cmd->operation == baseOperation * 0x289) 
+	if (cmd->operation == BASE_OPERATION) 
 	{
 		void* pid = (void*)cmd->data[0];
 		void* resultAddr = (void*)cmd->data[1];
@@ -260,9 +196,9 @@ ExitBootServicesEvent(
 	Runtime = TRUE;
 
 	// Print some text so we know it works (300iq)
-	ST->ConOut->SetAttribute(ST->ConOut, EFI_WHITE | EFI_BACKGROUND_BLUE);
+	ST->ConOut->SetAttribute(ST->ConOut, EFI_WHITE | EFI_BACKGROUND_RED);
 	ST->ConOut->ClearScreen(ST->ConOut);
-	Print(L"[Z3BRA] Driver seems to be working as expected! Windows is booting now...\n");
+	Print(L"[*] Driver is working. Windows is booting.\n");
 }
 
 // Replaces service table pointer with desired one
@@ -328,7 +264,7 @@ efi_main(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable)
 	// Return if protocol failed to open
 	if (EFI_ERROR(status)) 
 	{
-		Print(L"Can't open protocol: %d\n", status);
+		Print(L"[!] Can't open protocol: %d\n", status);
 		return status;
 	}
 
@@ -342,7 +278,7 @@ efi_main(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable)
 	// Return if interface failed to register
 	if (EFI_ERROR(status)) 
 	{
-		Print(L"Can't register interface: %d\n", status);
+		Print(L"[!] Can't register interface: %d\n", status);
 		return status;
 	}
 
@@ -360,7 +296,7 @@ efi_main(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable)
 	// Return if event create failed
 	if (EFI_ERROR(status)) 
 	{
-		Print(L"Can't create event (SetVirtualAddressMapEvent): %d\n", status);
+		Print(L"[!] Can't create event (SetVirtualAddressMapEvent): %d\n", status);
 		return status;
 	}
 
@@ -375,7 +311,7 @@ efi_main(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable)
 	// Return if event create failed (yet again)
 	if (EFI_ERROR(status)) 
 	{
-		Print(L"Can't create event (ExitBootServicesEvent): %d\n", status);
+		Print(L"[!] Can't create event (ExitBootServicesEvent): %d\n", status);
 		return status;
 	}
 
@@ -399,16 +335,11 @@ efi_main(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable)
 	oQueryVariableInfo = (EFI_QUERY_VARIABLE_INFO)SetServicePointer(&RT->Hdr, (VOID**)&RT->QueryVariableInfo, (VOID**)&HookedQueryVariableInfo);
 
 	// Print confirmation text
-	Print(L"\n");
-	Print(L"       __ _                                  \n");
-	Print(L"  ___ / _(_)___ _ __  ___ _ __  ___ _ _ _  _ \n");
-	Print(L" / -_)  _| |___| '  \\/ -_) '  \\/ _ \\ '_| || |\n");
-	Print(L" \\___|_| |_|   |_|_|_\\___|_|_|_\\___/_|  \\_, |\n");
-	Print(L"                                        |__/ \n");
-	Print(L"Made by: Samuel Tulach\n");
-	Print(L"Direct Calling By: The CruZ\n");
-	Print(L"Thanks to: @Mattiwatti (EfiGuard), Roderick W. Smith (rodsbooks.com)\n\n");
-	Print(L"Driver has been loaded successfully. You can now boot to the OS.\n");
-	Print(L"If you don't see a blue screen while booting disable Secure Boot!.\n");
-	return EFI_SUCCESS;
+    Print(L"  _________             \n");
+    Print(L" |_  /__ / |__ _ _ __ _ \n");
+    Print(L"  / / |_ \\ '_ \\ '_/ _` |\n");
+    Print(L" /___|___/_.__/_| \\__,_| \n\n");
+
+    Print(L"[+] Driver loaded successfully. Boot to the OS.\n");
+    return EFI_SUCCESS;
 }

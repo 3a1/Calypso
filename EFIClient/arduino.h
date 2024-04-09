@@ -1,19 +1,21 @@
 #pragma once
-
 #include <Windows.h>
 #include <iostream>
 #include <devguid.h>
 #include <SetupAPI.h>
 
+#include "utils.h"
+
 #pragma comment (lib, "Setupapi.lib")
 
-class arduino
+class Arduino
 {
 private:
-
 	HANDLE arduino_handle = NULL;
 
 public:
+
+	static Arduino arduino;
 
 	bool scan_devices(LPCSTR device_name, LPSTR lp_out);
 
@@ -21,6 +23,6 @@ public:
 
 	bool initialize(LPCSTR device_name);
 
-	~arduino();
+	~Arduino();
 
 };

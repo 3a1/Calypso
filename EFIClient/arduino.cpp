@@ -1,12 +1,14 @@
 #include "arduino.h"
 
-bool arduino::scan_devices(LPCSTR device_name, LPSTR lp_out)
+Arduino Arduino::arduino;
+
+bool Arduino::scan_devices(LPCSTR device_name, LPSTR lp_out)
 {
     bool status = false;
     char com[] = "COM";
 
     HDEVINFO device_info = SetupDiGetClassDevs(&GUID_DEVCLASS_PORTS, NULL, NULL, DIGCF_PRESENT);
-    if (device_info == INVALID_HANDLE_VALUE) { return false; }
+    if (device_info == INVALID_HANDLE_VALUE) return false;
 
     SP_DEVINFO_DATA dev_info_data;
     dev_info_data.cbSize = sizeof(dev_info_data);
@@ -20,7 +22,7 @@ bool arduino::scan_devices(LPCSTR device_name, LPSTR lp_out)
         {
             DWORD i = strlen(lp_out);
             LPCSTR lp_pos = strstr((LPCSTR)buffer, com);
-            DWORD len = i + strlen(lp_pos);
+            DWORD len = i + (lp_pos ? strlen(lp_pos) : 0);
 
             if (strstr((LPCSTR)buffer, device_name) && lp_pos)
             {
@@ -40,21 +42,21 @@ bool arduino::scan_devices(LPCSTR device_name, LPSTR lp_out)
     return status;
 }
 
-bool arduino::send_data(char* buffer, DWORD buffer_size)
+bool Arduino::send_data(char* buffer, DWORD buffer_size)
 {
     DWORD bytes_written;
     return WriteFile(this->arduino_handle, buffer, buffer_size, &bytes_written, NULL);
 }
 
-bool arduino::initialize(LPCSTR device_name)
+bool Arduino::initialize(LPCSTR device_name)
 {
     char port[] = "\\.\\";
     bool error = false;
 
-    printf("[Z3BRA] Waiting for arduino...\n");
+    utils::printc("[!]", "Waiting for arduino...", YELLOW);
 
     while (!scan_devices(device_name, port))
-    {
+    { 
         Sleep(1000);
     }
 
@@ -65,7 +67,7 @@ bool arduino::initialize(LPCSTR device_name)
         dcb.DCBlength = sizeof(dcb);
         if (!GetCommState(this->arduino_handle, &dcb))
         {
-            printf("GetCommState() failed\n");
+            utils::printc("[-]", "GetCommState() failed", RED);
             CloseHandle(this->arduino_handle);
             error = true;
         }
@@ -76,7 +78,7 @@ bool arduino::initialize(LPCSTR device_name)
         dcb.Parity = NOPARITY;
         if (!SetCommState(this->arduino_handle, &dcb))
         {
-            printf("SetCommState() failed\n");
+            utils::printc("[-]", "SetCommState() failed", RED);
             CloseHandle(this->arduino_handle);
             error = true;
         }
@@ -89,25 +91,29 @@ bool arduino::initialize(LPCSTR device_name)
         cto.WriteTotalTimeoutMultiplier = 10;
         if (!SetCommTimeouts(this->arduino_handle, &cto))
         {
-            printf("SetCommTimeouts() failed\n");
+            utils::printc("[-]", "SetCommTimeouts() failed", RED);
             CloseHandle(this->arduino_handle);
             error = true;
         }
-        if (error) {
-            printf("\n[Z3BRA] There are errors with arduino connection\n");
-            printf("[Z3BRA] Probably because you're using USB HOST SHIELD\n");
-            printf("[Z3BRA] Try to restart cheat\n\n");
+        if (error)
+        {
+            utils::printc("\n[!]", "There are errors with arduino connection", YELLOW);
+            utils::printc("   [!]", "Probably because you're using USB HOST SHIELD", YELLOW);
+            utils::printc("   [!]", "Try to restart cheat\n", YELLOW);
+            system("pause");
+            exit(0);
             return false;
         }
-        else {
-            //printf("[Z3BRA] Connected to %s\n", device_name);
-            printf("[Z3BRA] Connected to Arduino\n");
+        else 
+        {
+            //printf("[+] Connected to %s\n", device_name);
+            utils::printc("[+]", "Connected to Arduino", GREEN);
             return true;
         }
     }
 }
 
-arduino::~arduino()
+Arduino::~Arduino()
 {
     CloseHandle(this->arduino_handle);
 }

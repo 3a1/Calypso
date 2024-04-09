@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -75,6 +75,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,20 +88,22 @@
   <ItemGroup>
     <ClCompile Include="arduino.cpp" />
     <ClCompile Include="config.cpp" />
-    <ClCompile Include="Driver.cpp" />
+    <ClCompile Include="driver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="features.cpp" />
-    <ClCompile Include="functions.cpp" />
-    <ClCompile Include="mainLoop.h" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="loop.cpp" />
+    <ClCompile Include="loop.h" />
     <ClCompile Include="struct.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arduino.h" />
     <ClInclude Include="config.h" />
-    <ClInclude Include="Driver.h" />
+    <ClInclude Include="driver.h" />
     <ClInclude Include="features.h" />
-    <ClInclude Include="functions.h" />
+    <ClInclude Include="utils.h" />
     <ClInclude Include="includes.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="offsets.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,11 +1,10 @@
-#include "Driver.h"
+#include "driver.h"
 
-
-HANDLE Driver::driverH = 0;
-uintptr_t Driver::currentProcessId = 0;
+HANDLE driver::driverH = 0;
+uintptr_t driver::currentProcessId = 0;
 GUID DummyGuid = { 2 }; //don't matter our var never will be saved
 
-NTSTATUS SetSystemEnvironmentPrivilege(BOOLEAN Enable, PBOOLEAN WasEnabled)
+NTSTATUS setSystemEnvironmentPrivilege(BOOLEAN Enable, PBOOLEAN WasEnabled)
 {
 	if (WasEnabled != nullptr)
 		*WasEnabled = FALSE;
@@ -22,7 +21,7 @@ NTSTATUS SetSystemEnvironmentPrivilege(BOOLEAN Enable, PBOOLEAN WasEnabled)
 	return Status;
 }
 
-void Driver::SendCommand(MemoryCommand* cmd)
+void driver::sendCommand(MemoryCommand* cmd)
 {
 	UNICODE_STRING VariableName = RTL_CONSTANT_STRING(VARIABLE_NAME);
 	NtSetSystemEnvironmentValueEx(
@@ -34,23 +33,25 @@ void Driver::SendCommand(MemoryCommand* cmd)
 }
 
 
-uintptr_t Driver::GetBaseAddress(uintptr_t pid) {
+uintptr_t driver::getBaseAddress(uintptr_t pid)
+{
 	uintptr_t result = 0;
 	MemoryCommand cmd = MemoryCommand();
 	cmd.operation = baseOperation * 0x289;
 	cmd.magic = COMMAND_MAGIC;
 	cmd.data[0] = pid;
 	cmd.data[1] = (uintptr_t)&result;
-	SendCommand(&cmd);
+	sendCommand(&cmd);
 	return result;
 }
 
-NTSTATUS Driver::copy_memory(
+NTSTATUS driver::copy_memory(
 	const uintptr_t	src_process_id,
 	const uintptr_t src_address,
 	const uintptr_t	dest_process_id,
 	const uintptr_t	dest_address,
-	const size_t	size) {
+	const size_t	size)
+{
 	uintptr_t result = 0;
 	MemoryCommand cmd = MemoryCommand();
 	cmd.operation = baseOperation * 0x823;
@@ -61,11 +62,11 @@ NTSTATUS Driver::copy_memory(
 	cmd.data[3] = (uintptr_t)dest_address;
 	cmd.data[4] = (uintptr_t)size;
 	cmd.data[5] = (uintptr_t)&result;
-	SendCommand(&cmd);
+	sendCommand(&cmd);
 	return (NTSTATUS)result;
 }
 
-uintptr_t GetKernelModuleExport(uintptr_t kernel_module_base, char* function_name)
+uintptr_t getKernelModuleExport(uintptr_t kernel_module_base, char* function_name)
 {
 	if (!kernel_module_base)
 		return 0;
@@ -73,12 +74,12 @@ uintptr_t GetKernelModuleExport(uintptr_t kernel_module_base, char* function_nam
 	IMAGE_DOS_HEADER dos_header = { 0 };
 	IMAGE_NT_HEADERS64 nt_headers = { 0 };
 
-	Driver::read_memory(4, kernel_module_base, (uintptr_t)&dos_header, sizeof(dos_header));
+	driver::read_memory(4, kernel_module_base, (uintptr_t)&dos_header, sizeof(dos_header));
 
 	if (dos_header.e_magic != IMAGE_DOS_SIGNATURE)
 		return 0;
 
-	Driver::read_memory(4, kernel_module_base + dos_header.e_lfanew, (uintptr_t)&nt_headers, sizeof(nt_headers));
+	driver::read_memory(4, kernel_module_base + dos_header.e_lfanew, (uintptr_t)&nt_headers, sizeof(nt_headers));
 
 	if (nt_headers.Signature != IMAGE_NT_SIGNATURE)
 		return 0;
@@ -91,7 +92,7 @@ uintptr_t GetKernelModuleExport(uintptr_t kernel_module_base, char* function_nam
 
 	const auto export_data = reinterpret_cast<PIMAGE_EXPORT_DIRECTORY>(VirtualAlloc(nullptr, export_base_size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE));
 
-	Driver::read_memory(4, kernel_module_base + export_base, (uintptr_t)export_data, export_base_size);
+	driver::read_memory(4, kernel_module_base + export_base, (uintptr_t)export_data, export_base_size);
 
 	const auto delta = reinterpret_cast<uintptr_t>(export_data) - export_base;
 
@@ -123,7 +124,7 @@ uintptr_t GetKernelModuleExport(uintptr_t kernel_module_base, char* function_nam
 	return 0;
 }
 
-uintptr_t GetKernelModuleAddress(char* module_name)
+uintptr_t getKernelModuleAddress(char* module_name)
 {
 	void* buffer = nullptr;
 	DWORD buffer_size = 0;
@@ -135,9 +136,8 @@ uintptr_t GetKernelModuleAddress(char* module_name)
 		VirtualFree(buffer, 0, MEM_RELEASE);
 
 		buffer = VirtualAlloc(nullptr, buffer_size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-		if (buffer == 0) {
+		if (buffer == 0)
 			return 0;
-		}
 		status = NtQuerySystemInformation(static_cast<SYSTEM_INFORMATION_CLASS>(SystemModuleInformation), buffer, buffer_size, &buffer_size);
 	}
 
@@ -148,7 +148,8 @@ uintptr_t GetKernelModuleAddress(char* module_name)
 	}
 
 	const PRTL_PROCESS_MODULES modules = (PRTL_PROCESS_MODULES)buffer;
-	if (modules == nullptr) {
+	if (modules == nullptr)
+	{
 		VirtualFree(buffer, 0, MEM_RELEASE);
 		return 0;
 	}
@@ -169,27 +170,26 @@ uintptr_t GetKernelModuleAddress(char* module_name)
 	return 0;
 }
 
-bool Driver::initialize() {
+bool driver::init() 
+{
 	currentProcessId = GetCurrentProcessId();
 	BOOLEAN SeSystemEnvironmentWasEnabled;
 
-	NTSTATUS status = SetSystemEnvironmentPrivilege(true, &SeSystemEnvironmentWasEnabled);
+	NTSTATUS status = setSystemEnvironmentPrivilege(true, &SeSystemEnvironmentWasEnabled);
 
-	if (!NT_SUCCESS(status)) {
+	if (!NT_SUCCESS(status))
 		return false;
-	}
-
 
 	BYTE nstosname[] = { 'n','t','o','s','k','r','n','l','.','e','x','e',0 };
-	uintptr_t kernelModuleAddress = GetKernelModuleAddress((char*)nstosname);
+	uintptr_t kernelModuleAddress = getKernelModuleAddress((char*)nstosname);
 	memset(nstosname, 0, sizeof(nstosname));
 
 	BYTE pbid[] = { 'P','s','L','o','o','k','u','p','P','r','o','c','e','s','s','B','y','P','r','o','c','e','s','s','I','d',0 };
 	BYTE gba[] = { 'P','s','G','e','t','P','r','o','c','e','s','s','S','e','c','t','i','o','n','B','a','s','e','A','d','d','r','e','s','s',0 };
 	BYTE mmcp[] = { 'M','m','C','o','p','y','V','i','r','t','u','a','l','M','e','m','o','r','y',0 };
-	uintptr_t kernel_PsLookupProcessByProcessId = GetKernelModuleExport(kernelModuleAddress, (char*)pbid);
-	uintptr_t kernel_PsGetProcessSectionBaseAddress = GetKernelModuleExport(kernelModuleAddress, (char*)gba);
-	uintptr_t kernel_MmCopyVirtualMemory = GetKernelModuleExport(kernelModuleAddress, (char*)mmcp);
+	uintptr_t kernel_PsLookupProcessByProcessId = getKernelModuleExport(kernelModuleAddress, (char*)pbid);
+	uintptr_t kernel_PsGetProcessSectionBaseAddress = getKernelModuleExport(kernelModuleAddress, (char*)gba);
+	uintptr_t kernel_MmCopyVirtualMemory = getKernelModuleExport(kernelModuleAddress, (char*)mmcp);
 	memset(pbid, 0, sizeof(pbid));
 	memset(gba, 0, sizeof(gba));
 	memset(mmcp, 0, sizeof(mmcp));
@@ -202,22 +202,24 @@ bool Driver::initialize() {
 	cmd.data[1] = kernel_PsGetProcessSectionBaseAddress;
 	cmd.data[2] = kernel_MmCopyVirtualMemory;
 	cmd.data[3] = (uintptr_t)&result;
-	SendCommand(&cmd);
+	sendCommand(&cmd);
 	return result;
 }
 
-NTSTATUS Driver::read_memory(
+NTSTATUS driver::read_memory(
 	const uintptr_t	process_id,
 	const uintptr_t address,
 	const uintptr_t buffer,
-	const size_t	size) {
+	const size_t	size)
+{
 	return copy_memory(process_id, address, currentProcessId, buffer, size);
 }
 
-NTSTATUS Driver::write_memory(
+NTSTATUS driver::write_memory(
 	const uintptr_t	process_id,
 	const uintptr_t address,
 	const uintptr_t buffer,
-	const size_t	size) {
+	const size_t	size)
+{
 	return copy_memory(currentProcessId, buffer, process_id, address, size);
 }

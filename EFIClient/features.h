@@ -1,23 +1,20 @@
 #pragma once
-#include "mainLoop.h"
-#include "functions.h"
+#include "includes.h"
+#include "loop.h"
+#include "config.h"
+#include "utils.h"
 
-namespace Mouse {
-	namespace Aimbot {
-		void start(Loop& loopInstance);
-	}
-
-	namespace Triggerbot {
-		void start(Loop& loopInstance);
-	}
+namespace aimbot 
+{
+	void start();
 }
 
-namespace Arduino {
-	namespace Aimbot {
-		void start(Loop& loopInstance);
-	}
+namespace triggerbot 
+{
+	void start();
+}
 
-	namespace Triggerbot {
-		void start(Loop& loopInstance);
-	}
+namespace features 
+{
+	void start();
 }

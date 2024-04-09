@@ -4,7 +4,11 @@
 #include <numbers>
 #include "includes.h"
 
-struct PlayerPosition {
+#define RED (FOREGROUND_RED)
+#define GREEN (FOREGROUND_GREEN)
+#define YELLOW (FOREGROUND_RED | FOREGROUND_GREEN)
+
+struct playerPosition {
 	float screenPosition[2];
 };
 
@@ -17,31 +21,31 @@ struct view_matrix_t {
     float matrix[4][4];
 };
 
-struct Vector3
+struct vector3
 {
-	Vector3(
+	vector3(
 		const float x = 0.f,
 		const float y = 0.f,
 		const float z = 0.f) noexcept :
 		x(x), y(y), z(z) {};
 
 
-	const Vector3 operator-(const Vector3& v) const noexcept
+	const vector3 operator-(const vector3& v) const noexcept
 	{
-		return Vector3{ x - v.x, y - v.y, z - v.z };
+		return vector3{ x - v.x, y - v.y, z - v.z };
 	}
-	const Vector3 operator+(const Vector3& v) const noexcept
+	const vector3 operator+(const vector3& v) const noexcept
 	{
-		return Vector3{ x + v.x, y + v.y, z + v.z };
+		return vector3{ x + v.x, y + v.y, z + v.z };
 	}
-	const Vector3 operator/(const float v) const noexcept
+	const vector3 operator/(const float v) const noexcept
 	{
-		return Vector3{ x / v, y / v, z / v };
+		return vector3{ x / v, y / v, z / v };
 	}
 
-	const Vector3 operator*(const float v) const noexcept
+	const vector3 operator*(const float v) const noexcept
 	{
-		return Vector3{ x * v, y * v, z * v };
+		return vector3{ x * v, y * v, z * v };
 	}
 
 
@@ -50,7 +54,7 @@ struct Vector3
 		return x == 0.f && y == 0.f && z == 0.f;
 	}
 
-	Vector3 WTS(view_matrix_t matrix) const
+	vector3 wts(view_matrix_t matrix) const
 	{
 		int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 		int screenHeight = GetSystemMetrics(SM_CYSCREEN);
@@ -87,27 +91,4 @@ struct Vector3
 	}
 
 	float x, y, z;
-};
-
-class Vec2
-{
-public:
-	float x, y;
-
-	Vec2() {};
-
-	Vec2(float x, float y)
-	{
-		this->x;
-		this->y;
-	}
-
-	Vec2 operator + (Vec2 v)
-	{
-		return Vec2(x + v.x, y + v.y);
-	}
-	Vec2 operator - (Vec2 v)
-	{
-		return Vec2(x - v.x, y - v.y);
-	}
 };
