@@ -15,7 +15,6 @@ namespace config
 
 	struct Misc {
 		bool only_enemies;
-		float head_position;
 		bool tg_with_ab;
 	};
 
