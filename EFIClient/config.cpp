@@ -60,7 +60,6 @@ void config::readConfigFile()
     config::arduino.name = config("Arduino", "name");
 
     config::misc.only_enemies = utils::stob(config("Settings", "only-enemies"));
-    config::misc.head_position = std::stoi(config("Settings", "head-position"));
     config::misc.tg_with_ab = utils::stob(config("Settings", "tb-with-ab"));
 
     config::triggerbot.enable = utils::stob(config("Triggerbot", "enable"));
@@ -89,7 +88,6 @@ void config::createConfigFile()
         configFile << "enable=true       # if you dont have arduino change to false\n";
         configFile << "name=Leonardo     # change this to your arduino name in Device Manager\n\n";
         configFile << "[Settings]\n";
-        configFile << "head-position=65     # UPD: i forgot to remove it, for 2.5 update its useless, so just dont touch it\n";
         configFile << "only-enemies=true    # true = aiming only on enemies false = on teammates too\n";
         configFile << "tb-with-ab=false     # true = when you holding triggerbot key it will also triggers aimbot\n\n";
         configFile << "[Triggerbot]\n";
