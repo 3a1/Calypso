@@ -1,20 +1,21 @@
 #pragma once
 #include "includes.h"
-#include "loop.h"
-#include "config.h"
+
+#include "settings.h"
 #include "utils.h"
+#include "loop.h"
 
 namespace aimbot 
 {
-	void start();
+	void run();
 }
 
 namespace triggerbot 
 {
-	void start();
+	void run();
 }
 
 namespace features 
 {
-	void start();
+	bool start();
 }

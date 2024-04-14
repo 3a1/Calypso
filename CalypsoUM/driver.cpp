@@ -4,6 +4,25 @@ HANDLE driver::driverH = 0;
 uintptr_t driver::currentProcessId = 0;
 GUID DummyGuid = { 2 }; //don't matter our var never will be saved
 
+bool driver::checkDriverStatus()
+{
+	int icheck = 82;
+	NTSTATUS status = 0;
+
+	uintptr_t BaseAddr = getBaseAddress(GetCurrentProcessId());
+	if (BaseAddr == 0)
+	{
+		return false;
+	}
+
+	int checked = read<int>(GetCurrentProcessId(), (uintptr_t)&icheck, &status);
+	if (checked != icheck)
+	{
+		return false;
+	}
+	return true;
+}
+
 NTSTATUS setSystemEnvironmentPrivilege(BOOLEAN Enable, PBOOLEAN WasEnabled)
 {
 	if (WasEnabled != nullptr)

@@ -2,7 +2,7 @@
 
 Arduino Arduino::arduino;
 
-bool Arduino::scan_devices(LPCSTR device_name, LPSTR lp_out)
+bool Arduino::scan(LPCSTR device_name, LPSTR lp_out)
 {
     bool status = false;
     char com[] = "COM";
@@ -42,20 +42,20 @@ bool Arduino::scan_devices(LPCSTR device_name, LPSTR lp_out)
     return status;
 }
 
-bool Arduino::send_data(char* buffer, DWORD buffer_size)
+bool Arduino::send(char* buffer, DWORD buffer_size)
 {
     DWORD bytes_written;
     return WriteFile(this->arduino_handle, buffer, buffer_size, &bytes_written, NULL);
 }
 
-bool Arduino::initialize(LPCSTR device_name)
+bool Arduino::init()
 {
     char port[] = "\\.\\";
     bool error = false;
 
-    utils::printc("[!]", "Waiting for arduino...", YELLOW);
+    Log("[+]", "Waiting for arduino [...]", GREEN);
 
-    while (!scan_devices(device_name, port))
+    while (!scan(settings::arduino::name.c_str(), port))
     { 
         Sleep(1000);
     }
@@ -67,7 +67,7 @@ bool Arduino::initialize(LPCSTR device_name)
         dcb.DCBlength = sizeof(dcb);
         if (!GetCommState(this->arduino_handle, &dcb))
         {
-            utils::printc("[-]", "GetCommState() failed", RED);
+            Log("[-]", "GetCommState() failed", RED);
             CloseHandle(this->arduino_handle);
             error = true;
         }
@@ -78,7 +78,7 @@ bool Arduino::initialize(LPCSTR device_name)
         dcb.Parity = NOPARITY;
         if (!SetCommState(this->arduino_handle, &dcb))
         {
-            utils::printc("[-]", "SetCommState() failed", RED);
+            Log("[-]", "SetCommState() failed", RED);
             CloseHandle(this->arduino_handle);
             error = true;
         }
@@ -91,23 +91,26 @@ bool Arduino::initialize(LPCSTR device_name)
         cto.WriteTotalTimeoutMultiplier = 10;
         if (!SetCommTimeouts(this->arduino_handle, &cto))
         {
-            utils::printc("[-]", "SetCommTimeouts() failed", RED);
+            Log("[-]", "SetCommTimeouts() failed", RED);
             CloseHandle(this->arduino_handle);
             error = true;
         }
         if (error)
         {
-            utils::printc("\n[!]", "There are errors with arduino connection", YELLOW);
-            utils::printc("   [!]", "Probably because you're using USB HOST SHIELD", YELLOW);
-            utils::printc("   [!]", "Try to restart cheat\n", YELLOW);
+            Log("\n[!]", "There are errors with arduino connection", YELLOW);
+            Log("[!]", "Arduino can doesn't work when security boot on/TPM on/Windows11", YELLOW);
+            Log("[!]", "If still doesn't work try use Arduino IDE 1.8.9 to update .ino", YELLOW);
+            Log("[!]", "Try to:", YELLOW);
+            Log("   [!]", "Restart cheat", YELLOW);
+            Log("   [!]", "Change arduino port", YELLOW);
+            Log("   [!]", "Reupload arduino scratch\n", YELLOW);
             system("pause");
             exit(0);
             return false;
         }
         else 
         {
-            //printf("[+] Connected to %s\n", device_name);
-            utils::printc("[+]", "Connected to Arduino", GREEN);
+            Log("[+]", "Connected to " + settings::arduino::name, GREEN);
             return true;
         }
     }

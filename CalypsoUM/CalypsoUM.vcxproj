@@ -16,6 +16,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>EFIClient</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>CalypsoUM</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -91,6 +92,8 @@
     <ClCompile Include="driver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="features.cpp" />
+    <ClCompile Include="settings.cpp" />
+    <ClCompile Include="struct.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="loop.cpp" />
     <ClCompile Include="loop.h" />
@@ -100,10 +103,13 @@
     <ClInclude Include="arduino.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="driver.h" />
+    <ClInclude Include="entity.h" />
     <ClInclude Include="features.h" />
+    <ClInclude Include="keys.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="settings.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="includes.h" />
-    <ClInclude Include="main.h" />
     <ClInclude Include="offsets.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

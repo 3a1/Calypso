@@ -198,7 +198,7 @@ ExitBootServicesEvent(
 	// Print some text so we know it works (300iq)
 	ST->ConOut->SetAttribute(ST->ConOut, EFI_WHITE | EFI_BACKGROUND_RED);
 	ST->ConOut->ClearScreen(ST->ConOut);
-	Print(L"[*] Driver is working. Windows is booting.\n");
+	Print(L"\n[*] Driver is working. Windows is booting.\n");
 }
 
 // Replaces service table pointer with desired one
@@ -335,10 +335,11 @@ efi_main(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable)
 	oQueryVariableInfo = (EFI_QUERY_VARIABLE_INFO)SetServicePointer(&RT->Hdr, (VOID**)&RT->QueryVariableInfo, (VOID**)&HookedQueryVariableInfo);
 
 	// Print confirmation text
-    Print(L"  _________             \n");
-    Print(L" |_  /__ / |__ _ _ __ _ \n");
-    Print(L"  / / |_ \\ '_ \\ '_/ _` |\n");
-    Print(L" /___|___/_.__/_| \\__,_| \n\n");
+    Print(L"  ___      _                   \n");
+    Print(L" / __|__ _| |_  _ _ __ ___ ___ \n");
+    Print(L"| (__/ _` | | || | '_ (_-</ _ \\\n");
+    Print(L" \\___\\__,_|_|\\_, | .__/__/\\___/\n");
+    Print(L"             |__/|_|           \n\n");
 
     Print(L"[+] Driver loaded successfully. Boot to the OS.\n");
     return EFI_SUCCESS;

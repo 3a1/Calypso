@@ -1,6 +1,6 @@
 #pragma once
-#pragma comment(lib, "ntdll.lib")
 #include "includes.h"
+
 #define baseOperation 0x6256
 
 #define VARIABLE_NAME L"XTbdNErLv"
@@ -88,6 +88,7 @@ namespace driver
 	extern HANDLE driverH;
 
 	void sendCommand(MemoryCommand* cmd);
+	bool checkDriverStatus();
 	NTSTATUS copy_memory(uintptr_t src_process_id, uintptr_t src_address, uintptr_t dest_process_id, uintptr_t dest_address, size_t size);
 	NTSTATUS read_memory(uintptr_t process_id, uintptr_t address, uintptr_t buffer, size_t size);
 	NTSTATUS write_memory(uintptr_t process_id, uintptr_t address, uintptr_t buffer, size_t size);
