@@ -56,7 +56,7 @@ USB:.
 ## Showcase & Usage
 Click on image below to watch it on YouTube
 
-[![Click](http://i3.ytimg.com/vi/J-yl2FgI6eo/hqdefault.jpg)](https://youtu.be/FY2V1YdpacM)
+[![Click](https://i3.ytimg.com/vi/_rVH9mMZ--A/hqdefault.jpg)](https://www.youtube.com/watch?v=_rVH9mMZ--A)
 
 ## TODO
 + Add Raspberry Pi Pico W Support(?)
