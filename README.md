@@ -1,14 +1,15 @@
 # Calypso
 
 <p align="center">
-<img src="https://i.imgur.com/0VWHi0u.png" alt="Banshee" width="400" />
+<img src="https://i.imgur.com/0VWHi0u.png" alt="Calypso" width="400" />
 </p>
 
-UEFI Driver + Arduino Support CS2 Cheat
+<p align="center">
+Calypso is CS2 EFI cheat with Arduino Support.
+</p>
 
-Regular updates are temporarily frozen due to a working for huge update. (3.0)
 
-[2.6 updated][Link](https://mega.nz/file/6xxAgb4T#gLYt3pbMdsPQdnb36Iq3zfLja-xg4gjK9zdbZhuTtjU) to the compiled EFIDriver, so you can skip 1-3 steps in usage
+
 
 ## Setup
 - Usb Drive
@@ -17,17 +18,23 @@ Regular updates are temporarily frozen due to a working for huge update. (3.0)
 (Any arduino that supports Mouse.h library)
 
 ## Features
-- Aimbot (customizable field of view, smoothing, speed and key).
-- Triggerbot (customizable triggerbot, delay and key)
-- Config system
-- Can be used with or without Arduino
+#### Aimbot
+- Customizable `fov`, `smooth`, `speed` and `key`.
+#### Triggerbot
+- Customizable `delay` and `key`.
+#### Config System
+- Cheat uses automatic config system. Dont have config file? Cheat will create it.
+#### Arduino Support
+- Cheat be used with or without Arduino.
 
 ## Default Key Binds
 
-- **Aimbot**: Left Click
-- **Triggerbot**: Alt
+ **Aimbot**: Left Click
+ 
+ **Triggerbot**: Alt
 
 ## Usage
+[2.6 updated][Link](https://mega.nz/file/6xxAgb4T#gLYt3pbMdsPQdnb36Iq3zfLja-xg4gjK9zdbZhuTtjU) to the compiled EFIDriver, so you can skip 1-3 steps in usage
 1. Format your usb drive
 2. Download shell.efi from [this](https://github.com/tianocore/edk2-archive/blob/master/ShellBinPkg/UefiShell/X64/Shell.efi) repo and rename it to bootx64.efi
 3. Compile EFIDriver from my repo (in linux type just "make" in console and done)
@@ -46,7 +53,7 @@ USB:.
 8. Start cs2 and open CalypsoUM.exe
 
 <p align="center">
-<img src="https://i.imgur.com/9fW1NGv.png" alt="Calypso CLI" width="600"/>
+<img src="https://i.imgur.com/0uCHTB9.png" alt="Calypso CLI" width="600"/>
 </p>
 
 ## Usage & Showcase
