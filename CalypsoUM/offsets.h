@@ -5,10 +5,10 @@
 namespace offsets
 {
     // these offsets below are almost always change after a game update
-    constexpr std::ptrdiff_t dwEntityList = 0x18C1DB8;
+    constexpr std::ptrdiff_t dwEntityList = 0x18C1DE8;
     constexpr std::ptrdiff_t dwLocalPlayerPawn = 0x17361E8;
-    constexpr std::ptrdiff_t dwViewMatrix = 0x19231B0;
-    constexpr std::ptrdiff_t dwViewAngles = 0x192F940;
+    constexpr std::ptrdiff_t dwViewMatrix = 0x19231E0;
+    constexpr std::ptrdiff_t dwViewAngles = 0x192F970;
 
 
     // these offsets below are often the same after update
