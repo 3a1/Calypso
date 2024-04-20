@@ -6,6 +6,9 @@
 
 <p align="center">
 Calypso is CS2 EFI cheat with Arduino Support.
+
+04/20: updates for Calypto currently on freeze due to busy in irl
+
 </p>
 
 ## Setup
