@@ -34,6 +34,7 @@ Calypso is CS2 EFI cheat with Arduino Support.
  **Triggerbot**: `Alt`
 
 ## Usage
+[!] Calypso may not be compatible with windows 11
 [2.6 updated][Link](https://mega.nz/file/6xxAgb4T#gLYt3pbMdsPQdnb36Iq3zfLja-xg4gjK9zdbZhuTtjU) to the compiled CalypsoEFI, so you can skip 1-3 steps in usage
 1. Format your usb drive.
 2. Download `shell.efi` from [this](https://github.com/tianocore/edk2-archive/blob/master/ShellBinPkg/UefiShell/X64/Shell.efi) repo and rename it to `bootx64.efi`.
