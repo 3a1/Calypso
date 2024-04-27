@@ -1,14 +1,7 @@
-# Calypso
-
 <p align="center">
-<img src="https://i.imgur.com/0VWHi0u.png" alt="Calypso" width="400" />
-</p>
-
-<p align="center">
-Calypso is CS2 EFI cheat with Arduino Support.
-
-04/20: updates for Calypto currently on freeze due to busy irl
-
+    <img src="https://i.imgur.com/0VWHi0u.png" alt="Calypso" width="400" />
+    <h3 align="center">Calypso</h3>
+    <p align="center"><i>CS2 EFI cheat with Arduino Support.</i></p>
 </p>
 
 ## Setup
