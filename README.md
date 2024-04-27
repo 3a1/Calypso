@@ -31,7 +31,7 @@
 
 [2.6 updated][Link](https://mega.nz/file/6xxAgb4T#gLYt3pbMdsPQdnb36Iq3zfLja-xg4gjK9zdbZhuTtjU) to the compiled CalypsoEFI, so you can skip 1-3 steps in usage
 1. Format your usb drive.
-2. Download `shell.efi` from [this](https://github.com/tianocore/edk2-archive/blob/master/ShellBinPkg/UefiShell/X64/Shell.efi) repo and rename it to `bootx64.efi`.
+2. Download `shell.efi` from [this](https://github.com/tianocore/edk2-archive/raw/master/ShellBinPkg/UefiShell/X64/Shell.efi) repo and rename it to `bootx64.efi`.
 3. Compile `CalypsoEFI` from my repo (in linux type just `make` in console and done).
 4. Simply drop `memory.efi` to pendrive then create folders in usb drive and paste `bootx64.efi` like this:
 ```
