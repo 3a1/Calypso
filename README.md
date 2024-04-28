@@ -50,4 +50,4 @@ Click on image below to watch it on YouTube
 ## Credits
 + [EFI Driver](https://github.com/TheCruZ/EFI_Driver_Access)
 + [Arduino Code](https://github.com/backpack-0x1337/CyberAim-Valorant/)
-+ [EFI VS Compile](https://github.com/pbatard/gnu-efi/)
++ [EFI VS Compile](https://github.com/pbatard/uefi-simple)
