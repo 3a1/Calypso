@@ -5,6 +5,11 @@
 ## Table of Contents
 - [Visual Studio Installation](#visual-studio-installation)
 - [Calypso Installation](#calypso-installation)
+  - [1. Download](#1-download)
+  - [2. Compile](#2-compile)
+  - [3. USB Setup](#3-usb-setup)
+  - [4. Booting from USB Drive](#4-booting-from-usb-drive)
+  - [5. Finish](#5-finish)
 
 ## Visual Studio Installation
 
@@ -33,6 +38,8 @@
 ### 2. Compile
 - Open Calypso folder and start ``build.bat`` it will automatically compile binaries and copy them to the folder
 
+(optional: you can open ``CalypsoUM.sln`` and ``CalypsoEFI.efi`` to build project by yourself)
+
 ### 3. USB Setup
 - Insert your usb drive to the system and make ``format`` to the ``NTFS`` or ``FAT32``
 
@@ -53,24 +60,33 @@ USB:.
       └───Boot
               bootx64.efi
 ```
-(EFI and Boot are folders that you need to create)
+(``EFI`` and ``Boot`` are folders that you need to create)
 
 - Calypso EFI Setup Done!
 
 ### 4. Booting from USB Drive
-> [!!WARNING]
+> [!NOTE] 
 > 💻 On all systems bios is different so this process can looks different for you
 
-If you have PC search in google "{your motherboard model} bios key" or if you have laptop search instead "{your laptop model} bios key"
-(generally in 99% it will be one of these keybinds:  F1, F2, F10, F12, Del, or Esc.) 
+If you have PC search in google ``{your motherboard model} bios key`` or if you have laptop search instead ``{your laptop model} bios key``
+(generally in 99% it will be one of these keybinds:  ``F1``, ``F2``, ``F10``, ``F12``, ``Del``, or ``Esc``) 
 
 After that there is two methods how you can boot from usb drive:
-#### Change bios boot order
-> [!IMPORTANT]
-> 💻 Calypso might doesnt work on legacy boot systems 
+<details>
+<summary>Boot manually from usb drive</summary>
+  
+  > with manually booting you need to do it every system restart when you want to use the cheat
+  
+</details>
 
- - Boot manually from usb drive and back to the windows
+<details>
+<summary>Change bios boot order </summary>
 
- with first way after you change the boot order, your system will be automatically booting from usb drive every system startup until you will change boot order back
+  > after you change the boot order, your system will be automatically booting from usb drive every system startup until you will change boot order back
 
- with second way you just booting usb drive one time and you need to do it every system restart when you want to use the cheat
+</details>
+
+
+### 5. Finish
+- Start ``CS2``
+- Open Calypso folder again and start ``CalypsoUM.exe`` it will automatically create config file
