@@ -66,7 +66,7 @@ USB:.
 
 ### 4. Booting from USB Drive
 > [!NOTE] 
-> 💻 On all systems bios is different so this process can looks different for you
+> 🖥️ On all systems bios is different so this process can looks different for you
 
 If you have PC search in google ``{your motherboard model} bios key`` or if you have laptop search instead ``{your laptop model} bios key``
 (generally in 99% it will be one of these keybinds:  ``F1``, ``F2``, ``F10``, ``F12``, ``Del``, or ``Esc``) 
@@ -96,7 +96,7 @@ After that there is two methods how you can boot from usb drive:
 
 ### Arduino Usage
 > [!WARNING]
-> 💻 Arduino usage might doesn't work for Windows 11.
+> 🤖 Arduino usage might doesn't work for Windows 11.
 
 In order to make cheat work with arduino:
 
