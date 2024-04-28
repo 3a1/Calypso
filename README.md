@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://i.imgur.com/0VWHi0u.png" alt="Calypso" width="400" />
+    <img src=".github/images/calypso.jpg" alt="Calypso" width="400" />
     <h3 align="center">Calypso</h3>
     <p align="center"><i>CS2 EFI cheat with Arduino Support.</i></p>
 </p>
@@ -48,7 +48,7 @@ USB:.
 8. Start CS2 and open `CalypsoUM.exe`.
 
 <p align="center">
-<img src="https://i.imgur.com/0uCHTB9.png" alt="Calypso CLI" width="600"/>
+<img src=".github/images/calypso_cli.png" alt="Calypso CLI" width="600"/>
 </p>
 
 ## Showcase & Usage
