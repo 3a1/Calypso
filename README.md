@@ -30,14 +30,14 @@
 
 Check out [USAGE.md](.github/docs/USAGE.md) for detailed instruction.
 
-<p align="center">
 <img src=".github/images/calypso_cli.png" alt="Calypso CLI" width="600"/>
-</p>
+
 
 ## Showcase & Usage
 Click on image below to watch it on YouTube
 
 [![Click](https://i3.ytimg.com/vi/_rVH9mMZ--A/hqdefault.jpg)](https://www.youtube.com/watch?v=_rVH9mMZ--A)
+
 
 ## TODO
 + Add Raspberry Pi Pico W Support(?)
