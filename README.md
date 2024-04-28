@@ -12,7 +12,7 @@
 
 ## Features
 #### Aimbot
-- Customizable `fov`, `smooth`, `speed` and `key`.
+- Customizable `fov`, `smooth` and `key`.
 #### Triggerbot
 - Customizable `delay` and `key`.
 #### Config System
