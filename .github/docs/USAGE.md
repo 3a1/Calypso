@@ -10,6 +10,8 @@
   - [3. USB Setup](#3-usb-setup)
   - [4. Booting from USB Drive](#4-booting-from-usb-drive)
   - [5. Finish](#5-finish)
+- [Additional Information](#additional-information)
+  - [Arduino Usage](#arduino-usage)
 
 ## Visual Studio Installation
 
@@ -26,12 +28,10 @@
 - After that click on install and Visual Studio will be installed
 
 ## Calypso Installation
-> [!WARNING]
-> 💻 Arduino usage might doesn't work for Windows 11.
 
 ### 1. Download
 
-- ``Download`` and ``Extract`` last Calypso Release from [releases page](https://github.com/3a1/CS2-Calypso/releases/) or directly from [github page](https://github.com/3a1/CS2-Calypso)
+- Download and Extract last Calypso Release from [releases page](https://github.com/3a1/CS2-Calypso/releases/) or directly from [github page](https://github.com/3a1/CS2-Calypso)
   
 <img src="https://i.imgur.com/NjpLK7J.png" height="250" /><img src="https://i.imgur.com/vR5KNOT.png" height="250" />
 
@@ -45,9 +45,9 @@
 
 <img src="https://i.imgur.com/XGf3iWj.png" height="250" /><img src="https://i.imgur.com/vPRhMwB.png" height="250" />
 
-- ``Download`` efi shell from [this link](https://github.com/tianocore/edk2-archive/raw/master/ShellBinPkg/UefiShell/X64/Shell.efi)
+- **Download** efi shell from [this link](https://github.com/tianocore/edk2-archive/raw/master/ShellBinPkg/UefiShell/X64/Shell.efi)
 
-- ``Rename`` efi sheel from ``shell.efi`` to ``bootx64.efi``
+- **Rename** efi sheel from ``shell.efi`` to ``bootx64.efi``
 
 - Copy ``CalypsoEFI.efi``, ``Startup.nsh`` from Calypso folder and renamed before ``bootx64.efi`` to the usb drive like this:
 
@@ -60,7 +60,7 @@ USB:.
       └───Boot
               bootx64.efi
 ```
-(``EFI`` and ``Boot`` are folders that you need to create)
+(``EFI`` and ``Boot`` are folders that you need to create and drop bootx64.efi inside them)
 
 - Calypso EFI Setup Done!
 
@@ -89,4 +89,31 @@ After that there is two methods how you can boot from usb drive:
 
 ### 5. Finish
 - Start ``CS2``
-- Open Calypso folder again and start ``CalypsoUM.exe`` it will automatically create config file
+- Open Calypso folder again and start ``CalypsoUM.exe``, it will automatically creates config file
+- Enjoy :)
+
+## Additional Information
+
+### Arduino Usage
+> [!WARNING]
+> 💻 Arduino usage might doesn't work for Windows 11.
+
+In order to make cheat work with arduino:
+
+- Connect your Arduino
+- Inside Calypso folder go to ``Arduino`` and find ``arduino.ino`` arduino scratch file
+- In case that you doesn't have Arduino IDE you need to download it from [official website](https://www.arduino.cc/en/software)
+- Open ``arduino.ino`` with Arduino IDE and upload scratch to your arduino (you may be required to select a board before)
+<img src="https://i.imgur.com/8xwJsxY.png" height="250" />
+
+- Open ``settings.ini`` (if you doesnt have config file - open CalypsoUM and it will create config automatically)
+- Find this Arduino section:
+```
+[Arduino]
+enable: false
+name: Arduino_Leonardo
+```
+(remember that name in config file **can't** contain spaces, replace spaces with underscores instead)
+
+- Change ``enable`` to ``true`` and if you have arduino different than Arduino Leonardo change its ``name`` to name from Device Manager
+- Open CalypsoUM.exe and Calypso will automatically connect to the arduino
