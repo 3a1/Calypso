@@ -42,7 +42,7 @@ Download Calypso from [Releases](https://github.com/3a1/CS2-Calypso/releases/lat
 
 5. Boot from the USB drive
 
-9. After that open `update_offsets.py` and start CalypsoUM.exe
+9. After that open `update_offsets.py` and start `CalypsoUM.exe`
 
 
 Check out [USAGE.md](.github/docs/USAGE.md) for detailed instruction.
