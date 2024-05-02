@@ -105,7 +105,7 @@ After changing boot order priority you need just restart your system and you sho
 </details>
 
 ### 5. Finish
-- Open ``update_pffsets.py``(if you can't you can open cmd in directory and type ``python update_offsets.py``)
+- Open ``update_offsets.py``(if you can't you can open cmd in directory and type ``python update_offsets.py``)
 - Start ``CS2``
 - Open Calypso folder again and start ``CalypsoUM.exe``, it will automatically creates config file
 - Enjoy :)
