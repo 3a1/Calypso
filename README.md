@@ -64,7 +64,6 @@ Click on image below to watch it on YouTube
 + Get module base address via EFI not usermode(?)
 + Add fullscreen esp(?)
 + Clean code and fix bugs
-+ Auto-update offsets
 
 ## Credits
 + [EFI Driver](https://github.com/TheCruZ/EFI_Driver_Access)
