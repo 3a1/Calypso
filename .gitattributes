@@ -1,1 +1,5 @@
-Calypso/CalypsoEFI/gnu-efi/** linguist-vendored=false
+/.github export-ignore
+/.gitattributes export-ignore
+/.README.md export-ignore
+
+Calypso/CalypsoEFI/gnu-efi/** linguist-vendored
