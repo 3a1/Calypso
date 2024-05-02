@@ -4,6 +4,7 @@
 
 ## Table of Contents
 - [Visual Studio Installation](#visual-studio-installation)
+- [Python Installation](#python-installation)
 - [Calypso Installation](#calypso-installation)
   - [1. Download](#1-download)
   - [2. Compile](#2-compile)
@@ -20,12 +21,26 @@
 - Scroll down and click on ``community free download``. 
 <img src="https://i.imgur.com/Tqvqy5P.png" height="250" />
 
-- After download open Visual Studio Installation and follow the process until you reach download tab
+- After download open file and follow the installation process until you reach download tab
 
 - On download tab select ``Desktop development with C++``
 <img src="https://i.imgur.com/eWnqAD0.png" height="250" />
 
 - After that click on install and Visual Studio will be installed
+
+
+## Python Installation
+
+- Open [Python official page](https://www.python.org/downloads/)
+
+- Click on ``Download Python``. 
+<img src="https://i.imgur.com/2PfCpNZ.png" height="250" />
+
+- After download open file and select this сheckmark:
+<img src="https://i.imgur.com/B1B2YpK.png" height="250" />
+
+- After that click on ``Install Now`` and Python will be installed
+
 
 ## Calypso Installation
 
@@ -36,20 +51,20 @@
 <img src="https://i.imgur.com/NjpLK7J.png" height="250" /><img src="https://i.imgur.com/vR5KNOT.png" height="250" />
 
 ### 2. Compile
-- Open Calypso folder and start ``build.bat`` it will automatically compile binaries and copy them to the folder
+- Open Calypso folder and start ``build.bat`` it will automatically compile binaries and copy them to the folder (CalypsoEFI.efi will be compied in USB folder)
 
 (optional: you can open ``CalypsoUM.sln`` and ``CalypsoEFI.efi`` to build project by yourself)
 
 ### 3. USB Setup
-- Insert your usb drive to the system and make ``format`` to the ``NTFS`` or ``FAT32``
+- Insert your usb drive and format to ``FAT32``
 
 <img src="https://i.imgur.com/XGf3iWj.png" height="250" /><img src="https://i.imgur.com/vPRhMwB.png" height="250" />
 
-- **Download** efi shell from [this link](https://github.com/tianocore/edk2-archive/raw/master/ShellBinPkg/UefiShell/X64/Shell.efi)
+- **Download** EFI-Shell from [this link](https://github.com/tianocore/edk2-archive/raw/master/ShellBinPkg/UefiShell/X64/Shell.efi) and rename it from ``shell.efi`` to ``bootx64.efi``
 
-- **Rename** efi sheel from ``shell.efi`` to ``bootx64.efi``
+- Open USB folder inside Calypso, create ``EFI/Boot/`` folders and paste inside ``bootx64.efi`` (``USB/EFI/Boot/bootx64.efi``)
 
-- Copy ``CalypsoEFI.efi``, ``Startup.nsh`` from Calypso folder and renamed before ``bootx64.efi`` to the usb drive like this:
+- Copy contents from Calypso USB folder and paste to the usb drive like this:
 
 ```
 USB:.
@@ -60,7 +75,6 @@ USB:.
       └───Boot
               bootx64.efi
 ```
-(``EFI`` and ``Boot`` are folders that you need to create and drop bootx64.efi inside them)
 
 - Calypso EFI Setup Done!
 
@@ -76,6 +90,8 @@ After that there is two methods how you can boot from usb drive:
 <summary>Boot manually from usb drive</summary>
   
   > with manually booting you need to do it every system restart when you want to use the cheat
+
+After manual boot from usb you should back to the bios automatically, after that you need just to boot like before you did with usb but now with windows partition. on booting stage you should also see Calypso logo on the red background.
   
 </details>
 
@@ -84,10 +100,12 @@ After that there is two methods how you can boot from usb drive:
 
   > after you change the boot order, your system will be automatically booting from usb drive every system startup until you will change boot order back
 
+After changing boot order priority you need just restart your system and you should see Calypso logo on the red background , Windows should boot automatically.
+
 </details>
 
-
 ### 5. Finish
+- Open ``update_pffsets.py``(if you can't you can open cmd in directory and type ``python update_offsets.py``)
 - Start ``CS2``
 - Open Calypso folder again and start ``CalypsoUM.exe``, it will automatically creates config file
 - Enjoy :)
