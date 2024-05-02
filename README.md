@@ -17,6 +17,8 @@
 - Customizable `delay` and `key`.
 #### Config System
 - Cheat uses self-sufficient config system. Dont have config file? Cheat will create it itself.
+#### Offsets Updater
+- Offsets fetcher in python that allow to autoupdating offsets.
 #### Arduino Support
 - Cheat be used with or without Arduino.
 
