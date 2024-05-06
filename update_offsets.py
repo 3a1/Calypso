@@ -1,4 +1,16 @@
-import requests
+try:
+    import requests
+except ImportError:
+    print("Requests library not found. Installing...")
+    try:
+        import pip
+        pip.main(['install', 'requests'])
+        import requests
+        print("Requests library installed successfully!")
+    except Exception as e:
+        print("Failed to install requests library:", e)
+        exit()
+
 import os
 
 offsets_url = "https://raw.githubusercontent.com/a2x/cs2-dumper/main/output/offsets.json"
