@@ -80,7 +80,7 @@ USB:.
 
 ### 4. Booting from USB Drive
 > [!NOTE] 
-> 🖥️ On all systems bios is different so this process can looks different for you
+> 🖥️ Disable Secure Boot in your bios in order to be able boot from usb devices!
 
 If you have PC search in google ``{your motherboard model} bios key`` or if you have laptop search instead ``{your laptop model} bios key``
 (generally in 99% it will be one of these keybinds:  ``F1``, ``F2``, ``F10``, ``F12``, ``Del``, or ``Esc``) 
