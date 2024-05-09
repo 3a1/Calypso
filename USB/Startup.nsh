@@ -32,6 +32,39 @@ load CalypsoEFI.efi
 goto EXIT
 endif
 
+if exist fs5:\CalypsoEFI.efi then
+fs5:
+load CalypsoEFI.efi
+goto EXIT
+endif
+
+if exist fs6:\CalypsoEFI.efi then
+fs6:
+load CalypsoEFI.efi
+goto EXIT
+endif
+
+if exist fs7:\CalypsoEFI.efi then
+fs7:
+load CalypsoEFI.efi
+goto EXIT
+endif
+
+if exist fs8:\CalypsoEFI.efi then
+fs8:
+load CalypsoEFI.efi
+goto EXIT
+endif
+
+if exist fs9:\CalypsoEFI.efi then
+fs9:
+load CalypsoEFI.efi
+goto EXIT
+endif
+
+load CalypsoEFI.efi
+goto EXIT
+
 :EXIT
 stall 5000000
 exit
