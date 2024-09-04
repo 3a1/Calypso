@@ -14,7 +14,7 @@ except ImportError:
 import os
 
 offsets_url = "https://raw.githubusercontent.com/a2x/cs2-dumper/main/output/offsets.json"
-client_url = "https://raw.githubusercontent.com/a2x/cs2-dumper/main/output/client.dll.json"
+client_url = "https://raw.githubusercontent.com/a2x/cs2-dumper/main/output/client_dll.json"
 offsets_path = "./offsets/offsets.json"
 client_path = "./offsets/client.dll.json"
 
