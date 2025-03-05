@@ -7,7 +7,7 @@ EFI_STATUS EFIAPI ExitBootServicesHook(IN EFI_HANDLE ImageHandle, IN UINTN MapKe
     Log("Bootkit hook-chain sequence started");
     SLEEP(500);
 
-    global::winload = utils::get_winload_base(global::RetExitBootServices);
+    global::winload = memory::get_image_base(global::RetExitBootServices);
     if (!global::winload) 
     {
         Error("Can't find winload base!");
