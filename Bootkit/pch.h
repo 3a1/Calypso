@@ -4,17 +4,7 @@
 
 EXTERN_C
 {
-	#include <Uefi.h>
-	#include <Library/UefiLib.h>
-	#include <Library/DebugLib.h>
-	#include <Library/MemoryAllocationLib.h>
-
-	#include <Library/UefiBootServicesTableLib.h>
-	#include <Library/UefiRuntimeServicesTableLib.h>
-
-	#include <Uefi/UefiBaseType.h>
-	#include <Protocol/LoadedImage.h>
-	#include <Library/PrintLib.h>
+    #include <Uefi.h>
 
     void __disable_wp();
     void __enable_wp();
