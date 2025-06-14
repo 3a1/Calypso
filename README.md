@@ -8,7 +8,7 @@
 - Written in C++ and assembly
 - Compiled binary is just 7 KB in size
 - Usermode communication 
-- KPP Safe (Kernel Patch Guard)
+- PG Safe (PatchGuard)
 - EDK2 library reduced to minimal (only the necessary)
 
 ## Features
@@ -69,13 +69,13 @@ For this purpose, our kernel function needs to be executed as a syscall from the
 
 As I mentioned, i chose this function for several reasons, with the second and primary one that it is just wrapper for `CmUnloadKey` function.
 What does this means? 
-As you might know, Windows has a security feature called `Kernel Patch Guard` (KPP).
-The purpose of KPP is to scan kernel memory for changes and trigger a blue screen if any are detected.
+As you might know, Windows has a security feature called `PatchGuard` (PG) which implements the technique called `Kernel Patch Guard` (KPP).
+The purpose of PG is to scan kernel memory for changes and trigger a blue screen if any are detected.
 We bypass this feature by patching the OS kernel before it gets executed, so PatchGuard compares the already
 patched `ntosrknl` with the one in memory for any changes (believing that the patched one is the correct version).
 However, the problem that when hooking a function with a trampoline, the hooked function first jumps to the hook, performs
 its work, restores the modified bytes, calls the original function again and then re-applies the trampoline jump before returning.
-With KPP in place, we can't unhook the function because modifying the OS kernel at runtime would trigger KPP.
+With PG in place, we can't unhook the function because modifying the OS kernel at runtime would trigger PG.
 
 Here's where it gets complicated, we can't directly call the original function. Instead, we need to find a way to replace
 the functionality of the original function. A function that acts as a wrapper to another function is ideal in this case.
